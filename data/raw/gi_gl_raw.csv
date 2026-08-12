@@ -1,0 +1,131 @@
+food_name,cuisine,GI,GL
+"Basmati rice pilau, with onion and curry powder",south_asian,60,21
+Chapatti (Elephant Atta Medium flour),south_asian,68,24
+Chapatti,south_asian,58,20
+"Chapati, flatbread",south_asian,63,22
+"Chapati, flatbread with 10% fenugreek",south_asian,43,15
+Naan bread,south_asian,71,25
+"Paratha, frozen, heated in dry pan",south_asian,53,19
+"Pilaf porridge, whole grain",south_asian,59,21
+Rice dosa,south_asian,76,27
+Rice idli (commercial dry mix),south_asian,85,30
+Upma,south_asian,71,25
+Finger millet upma,south_asian,85,30
+Finger millet flakes upma,south_asian,82,29
+Finger millet vermicelli upma,south_asian,66,23
+"Basmati rice, white, polished, cooked 10 min",south_asian,50,23
+Basmati rice (Dreamrice),south_asian,56,25
+"Basmati rice, white, boiled (Mahatma)",south_asian,58,26
+"Basmati rice, white, boiled (SunRice)",south_asian,59,27
+Basmati rice (Laila),south_asian,66,30
+"Chickpeas, canned, drained",south_asian,35,5
+"Chickpeas (Garbanzo beans, Bengal gram), canned",south_asian,38,6
+"Lentils, brown, canned, drained",south_asian,42,6
+"Unpolished little millet, plain cooked",south_asian,89,40
+"Unpolished foxtail millet, plain cooked",south_asian,89,40
+Finger millet extruded snack,south_asian,65,16
+"Arrowroot (Canna indica), with coconut",south_asian,78,27
+"Arrowroot (Maranta arundinacea), with coconut",south_asian,58,20
+"Basmati rice (microwave), with coconut sambol - Pakistan",south_asian,56,20
+"Basmati rice (microwave), with coconut sambol - India",south_asian,43,15
+"Basmati rice (rice cooker), with coconut sambal",south_asian,64,22
+"Basmati rice (rice cooker), with coconut sambol",south_asian,54,19
+"Broken wheat upma, with green gram, chutney",south_asian,39,14
+"Chapatti, wheat flour, thin, with green gram dhal",south_asian,44,15
+"Cheela, bengal gram",south_asian,42,15
+"Cheela, bengal gram, fermented batter",south_asian,45,16
+"Cheela, green gram",south_asian,36,13
+"Cheela, green gram, fermented batter",south_asian,38,13
+"Dhokla, chickpea and wheat semolina",south_asian,35,12
+"Dhokla, parboiled rice, Bengal gram, green gram, with chutney",south_asian,37,13
+"Dosa, foxtail millet and black gram dhal",south_asian,42,15
+"Dosa, rice and black gram dhal",south_asian,55,19
+"Dosai (parboiled and raw rice), with chutney",south_asian,55,19
+"Idli, brown, parboiled rice and black gram dhal, with sambar",south_asian,48,17
+"Idli (parboiled and raw rice, black dhal), with chutney",south_asian,60,21
+"Jackfruit, with coconut and onion sambal",south_asian,53,19
+"Laddu (popped amaranth, foxtail millet, legume, fenugreek)",south_asian,24,8
+Lentil and cauliflower curry with rice,south_asian,60,21
+"Lentil curry, with wholemeal bread",south_asian,61,21
+"Lentils, Mothbean, sprouted, cooked in buttermilk",south_asian,30,11
+"Manioc (cassava), with coconut sambol",south_asian,85,30
+"Parantha, radish, wheat/mothbean/Bengal gram, with curd",south_asian,41,14
+"Poha, rice flakes with ground nuts",south_asian,43,15
+"Pongal, rice and roasted green gram dhal",south_asian,45,16
+"Poori, deep-fried wheat dough, with potato palya",south_asian,57,20
+"Porridge, scoured wheat, with gram mix",south_asian,39,14
+"Porridge, decorticated finger millet, with gram mix",south_asian,66,23
+"Puttu/Pittu, industrially-milled finger millet flour",south_asian,79,28
+"Puttu/Pittu, stone-ground finger millet flour",south_asian,67,23
+"Rajmah (kidney beans), boiled",south_asian,19,7
+"Red rice, with lentil curry, salad, egg, coconut gravy",south_asian,43,15
+"Roti (unleavened flatbread), whole wheat flour",south_asian,45,7
+"Roti, 75% rice flour and 25% soy flour",south_asian,36,13
+"Stringhoppers, red rice flour, with sambol/egg/gravy",south_asian,73,26
+"Tahlipeeth, wheat/bengal gram/green gram, with chutney",south_asian,31,11
+"Upittu, roasted semolina and onions",south_asian,69,24
+"Yam (Dioscorea alata), white, with coconut",south_asian,49,17
+White bread,american,59,9
+"Burger Buns, 100% Whole wheat",american,62,9
+Doughnut,american,75,23
+"Rye bread, Pumpernickel",american,49,7
+"Multigrain bread, gluten-free",american,79,12
+Multigrain batch bread,american,62,9
+"White sourdough bread, gluten free",american,63,9
+Oat bran concentrate bread,american,64,10
+Fruit and Muesli bread (Bürgen),american,53,8
+Muesli bread (packet mix),american,54,8
+"Oats, rolled, uncooked",american,59,12
+Weet-Bix breakfast biscuit,american,69,14
+Rice Bubbles (Kellogg's),american,85,17
+Cornflakes,american,66,13
+Bran Flakes (Kellogg's),american,74,15
+Chocolate cake (Betty Crocker),american,38,11
+"Danish Pastry, Apple and Peach",american,50,15
+Apple Blueberry muffin,american,49,15
+"Banana, oat and honey muffin",american,65,20
+Cranberry Raisin muffin,american,43,13
+"Pizza base, oven-baked (Boboli)",american,52,16
+"French Fries, baked (OreIda)",american,64,13
+Cheddar Cheese Crackers (Combos),american,54,14
+Cheddar Cheese Pretzels (Combos),american,52,13
+"Soft pretzel, wheat",american,66,10
+"Microwave popcorn, butter flavor",american,51,13
+"Cheese Puffs, rice and corn (Pirate's Booty)",american,70,18
+"Ice cream, premium chocolate, 15% fat",american,37,7
+"Milk, reduced fat",american,26,3
+"Yoghurt, Greek style, honey topped",american,36,7
+"Yoghurt, black cherry",american,17,3
+"Yoghurt, bourbon vanilla",american,64,13
+"Yoghurt, natural, no added sugar",american,17,2
+"Custard apple, raw",american,54,8
+"Pineapple, raw",american,82,12
+"Grapes, Crimson seedless",american,50,8
+"Grapes, green, Menidee, seedless",american,54,8
+"Watermelon, raw",american,55,8
+Orange juice,american,41,8
+"Sweet corn, cooked in microwave",american,51,10
+"Carrots, unpeeled, boiled",american,32,3
+"Carrots, diced, frozen",american,31,3
+"Peas, plain and frozen",american,29,3
+Hommus dip,american,22,3
+Baked Beans in Cheesy Tomato sauce (Heinz),american,44,7
+Baked Beans in Barbecue sauce (Heinz),american,47,7
+Baked Beans in Tomato sauce (Heinz),american,40,6
+Manuka honey MGO 440+,american,65,3
+Capilano Premium Honey,american,51,3
+Mixed Grain bread roll (Bürgen),american,52,8
+"Brown rice, instant (Uncle Ben's)",american,48,22
+Peanut Butter Granola bars (Kudos),american,45,11
+Chocolate covered almonds (Cocoavia),american,21,5
+Raisins,american,61,9
+"Strawberries, fresh, raw",american,40,6
+"Apricot, coconut and honey muffin",american,60,18
+"Fruit Salad, canned (peach/pear/apricot/pineapple/cherry)",american,54,8
+"Mango dessert, prepared (Nestlé)",american,33,7
+"Maple syrup, pure Canadian",american,54,3
+"Apricot fruit spread, no added sugar",american,43,6
+Apricot fruit spread (Cottees),american,50,8
+"Apple juice, unsweetened",american,39,8
+"Tomato soup, condensed, prepared with water (Campbell's)",american,52,10
+Chunky Roast Chicken and Vegetable soup (Campbell's),american,52,10
