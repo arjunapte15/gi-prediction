@@ -129,3 +129,47 @@ dosa/idli/upma/dhokla/pongal/cheela-family dishes default here.
 | Regional or traditional foods | 42 |
 | (excluded: non-Atkinson exceptions) | 8 |
 | **Total** | **66** |
+
+*Note: the table above reflects the file's original state and is left as-is
+per this amendment's additive-only scope -- see the correction to Rajmah's
+category directly below, which supersedes this table's Legumes/Regional
+counts (Legumes 5->4, Regional 42->43) and is what `tests/test_phase_05.py`
+now uses for the GL check.*
+
+## Amendment: additional spot-checks against the real Atkinson supplemental tables
+
+This mapping was originally built by judgment-matching each food to
+Atkinson's category *definitions*, because the actual supplemental tables
+weren't available at the time (only two entries -- Chapatti and Roti --
+had been independently arithmetic-confirmed). The real tables are now
+available at `data/raw/atkinson_files/SupplementalTable1.pdf` and
+`SupplementalTable2.pdf` (gitignored, not committed). 10 south_asian
+foods spanning 4 categories were spot-checked directly against them:
+
+| food | original category | Atkinson item # (table) | matched entry | GI/GL | result |
+|---|---|---|---|---|---|
+| Naan bread | Regional or traditional foods | #2083 (T1, p138) | "Naan bread (True Foods Pty Ltd, VIC, Australia), heated in microwave for 25 sec" (Australia, 2013) | 71/25 | **CONFIRMED** |
+| Upma | Regional or traditional foods | #2091 (T1, p138) | "Upma" (India, 2018) | 71/25 | **CONFIRMED** |
+| Basmati rice, white, polished, cooked 10 min | Cereal grains | #574 (T1, p40) | "Basmati, white, polished, cooked 10 min" (UK, 2009), under "Basmati, white rice, boiled" subheading | 50/23 | **CONFIRMED** |
+| Chickpeas, canned, drained | Legumes | #1284 (T1, p87) | "Chickpeas, canned, drained (Edgell, Simplot Australia, Australia)" (2018), under "Chickpeas and chickpea products" subheading | 35/5 | **CONFIRMED** |
+| Lentils, brown, canned, drained | Legumes | #1299 (T1, p88) | "Lentils, brown, canned, drained, Edgell's™ brand (Simplot Australia, Australia)" (2008) | 42/6 | **CONFIRMED** |
+| Unpolished little millet, plain cooked | Cereal grains | #564 (T1, p40) | "Unpolished little millet, plain cooked (Earth 360, Kadiri, Andhra Pradesh, India)" (2017-18) | 89/40 | **CONFIRMED** |
+| Finger millet extruded snack | Snack foods and confectionery | #1560 (T1, p105) | "Finger millet extruded snack" (India, 2018) | 65/16 | **CONFIRMED** |
+| Dosa, rice and black gram dhal | Regional or traditional foods | #3856 (T2, p124) | "Dosa, made from rice and black gram dhal" (India, 2015) | 55/19 | **CONFIRMED** (found in Table 2, not Table 1) |
+| Idli (parboiled and raw rice, black dhal), with chutney | Regional or traditional foods | #3863 (T2, p124) | "Idli (parboiled and raw rice with black dhal, soaked, ground, fermented, steamed) with chutney" (India, 1998) | 60/21 | **CONFIRMED** (found in Table 2, not Table 1) |
+| Rajmah (kidney beans), boiled | Legumes | #3891 (T2, p126) | "Rajmah (Phaseolus vulgaris), boiled" (India, 1981) | 19/7 | **CORRECTED** -- real source places this specific entry under **Regional or traditional foods (35g)**, not Legumes (15g). Page 126 falls within Table 2's Regional or Traditional Foods page range (112-134), not its Legumes range (70-78). Likely explanation: this is an older (1981), India-specific single-food test that the reviewers filed among the regional-foods literature rather than the generic legumes literature, unlike the newer branded "Chickpeas"/"Lentils" entries above which are in the Legumes section proper. |
+
+**Result: 9/10 confirmed, 1/10 corrected.** All 4 spot-checked categories
+(Cereal grains, Legumes, Snack foods and confectionery, Regional or
+traditional foods) had at least one directly-confirmed entry. Combined
+with the 2 arithmetic-confirmed foods from the original mapping (Chapatti,
+Roti), this is now 11 of the 66 south_asian foods with direct source
+confirmation.
+
+**Correction applied**: "Rajmah (kidney beans), boiled" moves from Legumes
+(15g standard carb) to Regional or traditional foods (35g standard carb)
+in `tests/test_phase_05.py`'s category assignment. carbs_g=19.44 for this
+food, so the implied serving weight changes from 15/19.44*100=77.2g (old,
+Legumes) to 35/19.44*100=180.0g (new, Regional or traditional foods) --
+both are within the 5-600g plausibility range, so this correction does not
+cause a test failure.

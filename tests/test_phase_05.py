@@ -58,7 +58,11 @@ CATEGORY_STANDARD_CARB_G = {
 }
 
 # South Asian category assignment, kept in sync with
-# data/raw/south_asian_category_mapping.md.
+# data/raw/south_asian_category_mapping.md. Amendment: "Rajmah (kidney
+# beans), boiled" was verified against the real Atkinson supplemental
+# tables and moved out of SOUTH_ASIAN_LEGUMES (it now falls through to the
+# default "Regional or traditional foods" in _south_asian_category below) --
+# see that file's "Amendment: additional spot-checks" section.
 SOUTH_ASIAN_CEREAL_GRAINS = {
     "Basmati rice, white, polished, cooked 10 min",
     "Basmati rice (Dreamrice)",
@@ -73,7 +77,6 @@ SOUTH_ASIAN_LEGUMES = {
     "Chickpeas, canned, drained",
     "Chickpeas (Garbanzo beans, Bengal gram), canned",
     "Lentils, brown, canned, drained",
-    "Rajmah (kidney beans), boiled",
     "Lentils, Mothbean, sprouted, cooked in buttermilk",
 }
 SOUTH_ASIAN_BREADS = {"Roti (unleavened flatbread), whole wheat flour"}
@@ -83,7 +86,11 @@ SOUTH_ASIAN_SNACK_FOODS = {
 }
 
 # American category assignment, kept in sync with
-# data/raw/american_category_mapping.md.
+# data/raw/american_category_mapping.md. Amendment: this mapping was
+# rebuilt from the real Atkinson supplemental tables (previously judgment-
+# matched only). One correction resulted: "Soft pretzel, wheat" moved from
+# AMERICAN_SNACK_FOODS to AMERICAN_BREADS (Atkinson item #208 places it in
+# a Pretzels subsection of Breads, not Snack foods and confectionery).
 AMERICAN_BREADS = {
     "White bread",
     "Burger Buns, 100% Whole wheat",
@@ -95,6 +102,7 @@ AMERICAN_BREADS = {
     "Fruit and Muesli bread (Bürgen)",
     "Muesli bread (packet mix)",
     "Mixed Grain bread roll (Bürgen)",
+    "Soft pretzel, wheat",
 }
 AMERICAN_BREAKFAST_CEREALS = {
     "Oats, rolled, uncooked",
@@ -125,7 +133,6 @@ AMERICAN_VEGETABLES_LOW_CARB_EXCEPTION = {
 AMERICAN_SNACK_FOODS = {
     "Cheddar Cheese Crackers (Combos)",
     "Cheddar Cheese Pretzels (Combos)",
-    "Soft pretzel, wheat",
     "Microwave popcorn, butter flavor",
     "Cheese Puffs, rice and corn (Pirate's Booty)",
     "Peanut Butter Granola bars (Kudos)",

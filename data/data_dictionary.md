@@ -114,13 +114,29 @@ Each food's Atkinson category is recorded in:
   non-Atkinson exception dishes excluded)
 - `data/raw/american_category_mapping.md` (63 american foods)
 
-Category assignment for both cuisines is a documented judgment call, not a
-literal per-food table lookup: the Atkinson supplemental data actually
-containing per-food category assignments is hosted separately from the
-systematic-review PDF used as this phase's source and wasn't available in
-this session, so foods were matched to Atkinson's 21 category *definitions*
-by name and nature, following the same methodology and documentation style
-in both mapping files.
+**Amendment**: category assignment was originally a documented judgment
+call rather than a literal per-food table lookup, because the Atkinson
+supplemental tables (which contain the actual per-food category
+assignments) weren't available in the Phase 5 session -- only the
+systematic-review journal article was, so foods were matched to Atkinson's
+21 category *definitions* by name and nature. In a later amendment, the
+real supplemental tables (`SupplementalTable1.pdf`/`SupplementalTable2.pdf`,
+gitignored, not committed) became available and were used to verify every
+american food and spot-check 10 south_asian foods directly. All 63
+american foods were found with an exact GI/GL match in the source tables,
+confirming both their category and their original `gi_gl_raw.csv` sourcing;
+9 of 10 south_asian spot-checks confirmed the original mapping. Two
+corrections resulted and are reflected in `tests/test_phase_05.py`'s
+category sets:
+- **american**: "Soft pretzel, wheat" moved from Snack foods and
+  confectionery to **Breads** (15g standard carb)
+- **south_asian**: "Rajmah (kidney beans), boiled" moved from Legumes to
+  **Regional or traditional foods** (35g standard carb)
+
+See `data/raw/american_category_mapping.md`'s "Amendment: rebuilt from the
+real supplemental tables" section and `data/raw/south_asian_category_mapping.md`'s
+"Amendment: additional spot-checks" section for full citations (Atkinson
+item numbers, matched entry text, table number) of every verified food.
 
 `tests/test_phase_05.py`'s GL check works out, per food, what serving
 weight (in this dataset's decomposed/matched `carbs_g`, per 100g) would
