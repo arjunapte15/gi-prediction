@@ -1,0 +1,26 @@
+{
+  "food_name": "Roti, 75% rice flour and 25% soy flour",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 75,
+      "note": "75% rice flour",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "soybean",
+      "grams": 25,
+      "note": "25% soy flour (whole soybean composition used, see notes)",
+      "source": "IFCT B024 Soybean, brown (soy flour proxy)"
+    }
+  ],
+  "total_mix_grams": 100,
+  "per_100g_nutrients": {
+    "fiber_g": 7.5,
+    "fat_g": 5.34,
+    "protein_g": 14.85,
+    "carbs_g": 61.88,
+    "sugar_g": 1.14
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

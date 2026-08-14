@@ -1,0 +1,50 @@
+{
+  "food_name": "Butter chicken",
+  "ingredients": [
+    {
+      "ingredient": "chicken",
+      "grams": 400,
+      "note": "400g chicken",
+      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)"
+    },
+    {
+      "ingredient": "yogurt",
+      "grams": 122.5,
+      "note": "0.5 cup yogurt marinade",
+      "source": "published (USDA FDC, plain whole-milk yogurt)"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 135.0,
+      "note": "0.75 cup tomato puree",
+      "source": "IFCT D076 Tomato, ripe, local"
+    },
+    {
+      "ingredient": "butter",
+      "grams": 42,
+      "note": "3 tbsp butter",
+      "source": "published (USDA FDC, salted butter)"
+    },
+    {
+      "ingredient": "cream",
+      "grams": 45,
+      "note": "3 tbsp cream",
+      "source": "published (USDA FDC, heavy cream, ~36% fat)"
+    },
+    {
+      "ingredient": "honey",
+      "grams": 30.0,
+      "note": "1.5 tbsp honey/sugar",
+      "source": "published (USDA FDC, honey)"
+    }
+  ],
+  "total_mix_grams": 774.5,
+  "per_100g_nutrients": {
+    "fiber_g": 0.32,
+    "fat_g": 13.76,
+    "protein_g": 10.87,
+    "carbs_g": 4.72,
+    "sugar_g": 4.32
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

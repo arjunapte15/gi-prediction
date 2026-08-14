@@ -1,0 +1,38 @@
+{
+  "food_name": "Palak paneer",
+  "ingredients": [
+    {
+      "ingredient": "paneer",
+      "grams": 300,
+      "note": "300g paneer",
+      "source": "IFCT L003 Paneer"
+    },
+    {
+      "ingredient": "spinach",
+      "grams": 500,
+      "note": "~500g spinach",
+      "source": "IFCT C033 Spinach"
+    },
+    {
+      "ingredient": "cream",
+      "grams": 30,
+      "note": "2 tbsp cream",
+      "source": "published (USDA FDC, heavy cream, ~36% fat)"
+    },
+    {
+      "ingredient": "onion",
+      "grams": 80,
+      "note": "1 small onion",
+      "source": "IFCT G017 Onion, big"
+    }
+  ],
+  "total_mix_grams": 910,
+  "per_100g_nutrients": {
+    "fiber_g": 1.52,
+    "fat_g": 9.73,
+    "protein_g": 7.59,
+    "carbs_g": 2.85,
+    "sugar_g": 1.54
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

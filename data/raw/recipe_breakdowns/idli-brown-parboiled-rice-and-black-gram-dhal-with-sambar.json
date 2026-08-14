@@ -1,0 +1,38 @@
+{
+  "food_name": "Idli, brown, parboiled rice and black gram dhal, with sambar",
+  "ingredients": [
+    {
+      "ingredient": "rice_parboiled",
+      "grams": 760,
+      "note": "4 cups parboiled rice",
+      "source": "IFCT A014 Rice, parboiled, milled"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 200,
+      "note": "1 cup urad dal",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "toor_dal",
+      "grams": 15,
+      "note": "sambar dal, dry-equivalent ~15g",
+      "source": "IFCT B021 Red gram, dal (toor/arhar dal, for sambar)"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 10,
+      "note": "sambar vegetable, ~10g tomato-equivalent",
+      "source": "IFCT D076 Tomato, ripe, local"
+    }
+  ],
+  "total_mix_grams": 985,
+  "per_100g_nutrients": {
+    "fiber_g": 5.46,
+    "fat_g": 0.8,
+    "protein_g": 11.05,
+    "carbs_g": 70.76,
+    "sugar_g": 0.73
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

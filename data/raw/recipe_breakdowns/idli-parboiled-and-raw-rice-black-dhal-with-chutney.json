@@ -1,0 +1,32 @@
+{
+  "food_name": "Idli (parboiled and raw rice, black dhal), with chutney",
+  "ingredients": [
+    {
+      "ingredient": "rice_parboiled",
+      "grams": 760,
+      "note": "4 cups parboiled rice",
+      "source": "IFCT A014 Rice, parboiled, milled"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 200,
+      "note": "1 cup urad dal",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 18,
+      "note": "chutney side, ~18g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 978,
+  "per_100g_nutrients": {
+    "fiber_g": 5.54,
+    "fat_g": 1.53,
+    "protein_g": 10.86,
+    "carbs_g": 70.51,
+    "sugar_g": 0.81
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

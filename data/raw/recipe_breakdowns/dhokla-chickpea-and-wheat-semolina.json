@@ -1,0 +1,32 @@
+{
+  "food_name": "Dhokla, chickpea and wheat semolina",
+  "ingredients": [
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 180.0,
+      "note": "1.5 cups besan",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "yogurt",
+      "grams": 183.75,
+      "note": "0.75 cup yogurt",
+      "source": "published (USDA FDC, plain whole-milk yogurt)"
+    },
+    {
+      "ingredient": "semolina",
+      "grams": 6.88,
+      "note": "2 tsp semolina",
+      "source": "IFCT A022 Wheat, semolina (rava)"
+    }
+  ],
+  "total_mix_grams": 370.62,
+  "per_100g_nutrients": {
+    "fiber_g": 7.54,
+    "fat_g": 4.82,
+    "protein_g": 12.61,
+    "carbs_g": 26.74,
+    "sugar_g": 2.86
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

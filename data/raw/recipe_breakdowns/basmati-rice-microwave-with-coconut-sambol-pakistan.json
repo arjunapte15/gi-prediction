@@ -1,0 +1,26 @@
+{
+  "food_name": "Basmati rice (microwave), with coconut sambol - Pakistan",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 175,
+      "note": "basmati rice, ~175g dry-equivalent",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 25,
+      "note": "coconut sambol, ~25g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 200,
+  "per_100g_nutrients": {
+    "fiber_g": 3.76,
+    "fat_g": 5.63,
+    "protein_g": 7.43,
+    "carbs_g": 69.25,
+    "sugar_g": 1.38
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

@@ -1,0 +1,32 @@
+{
+  "food_name": "Pongal, rice and roasted green gram dhal",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 285.0,
+      "note": "1.5 cups rice",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "moong_dal",
+      "grams": 200,
+      "note": "1 cup moong dal",
+      "source": "IFCT B010 Green gram, dal (moong dal)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 35.0,
+      "note": "2.5 tbsp ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    }
+  ],
+  "total_mix_grams": 520.0,
+  "per_100g_nutrients": {
+    "fiber_g": 5.14,
+    "fat_g": 7.5,
+    "protein_g": 13.56,
+    "carbs_g": 63.11,
+    "sugar_g": 0.74
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

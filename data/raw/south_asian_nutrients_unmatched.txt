@@ -1,0 +1,8 @@
+Arrowroot (Canna indica), with coconut	no reliable modern recipe proportion found; species-specific preparation
+Arrowroot (Maranta arundinacea), with coconut	same issue as Canna indica arrowroot
+Jackfruit, with coconut and onion sambal	meal-assembly dish, portion sizes unclear from available sourcing
+Lentil and cauliflower curry with rice	meal-assembly, portion sizes unclear
+Lentil curry, with wholemeal bread	meal-assembly, portion sizes unclear
+Manioc (cassava), with coconut sambol	manioc alone is a direct IFCT lookup (F015 Tapioca), but exact coconut sambol portion for this specific dish wasn't confirmed
+Red rice, with lentil curry, salad, egg, coconut gravy	multi-component meal-assembly, too many unclear portions to responsibly estimate
+Yam (Dioscorea alata), white, with coconut	yam species-matched IFCT entry not available (only elephant/ordinary/wild yam), and the coconut portion wasn't confirmed

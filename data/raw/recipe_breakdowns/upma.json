@@ -1,0 +1,38 @@
+{
+  "food_name": "Upma",
+  "ingredients": [
+    {
+      "ingredient": "semolina",
+      "grams": 165,
+      "note": "1 cup semolina/rava",
+      "source": "IFCT A022 Wheat, semolina (rava)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 28,
+      "note": "2 tbsp oil/ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 3,
+      "note": "1 tsp urad dal tempering",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 3,
+      "note": "1 tsp chana dal tempering",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    }
+  ],
+  "total_mix_grams": 199,
+  "per_100g_nutrients": {
+    "fiber_g": 8.47,
+    "fat_g": 14.72,
+    "protein_g": 10.15,
+    "carbs_g": 58.21,
+    "sugar_g": 1.4
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

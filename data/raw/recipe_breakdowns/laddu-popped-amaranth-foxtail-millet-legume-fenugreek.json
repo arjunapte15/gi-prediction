@@ -1,0 +1,44 @@
+{
+  "food_name": "Laddu (popped amaranth, foxtail millet, legume, fenugreek)",
+  "ingredients": [
+    {
+      "ingredient": "amaranth_seed",
+      "grams": 40,
+      "note": "popped amaranth, ~40g",
+      "source": "IFCT A001 Amaranth seed, black"
+    },
+    {
+      "ingredient": "foxtail_millet",
+      "grams": 40,
+      "note": "popped foxtail millet, ~40g",
+      "source": "IFCT A017 Varagu (see caveat: labelled Paspalum scrobiculatum in Table 1 but Setaria italica in Table 6)"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 15,
+      "note": "besan, ~15g",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "fenugreek_seeds",
+      "grams": 5,
+      "note": "fenugreek, ~5g",
+      "source": "IFCT G026 Fenugreek seeds"
+    },
+    {
+      "ingredient": "jaggery",
+      "grams": 33.3,
+      "note": "jaggery, ~25% of total weight",
+      "source": "IFCT I001 Jaggery, cane"
+    }
+  ],
+  "total_mix_grams": 133.3,
+  "per_100g_nutrients": {
+    "fiber_g": 7.51,
+    "fat_g": 3.34,
+    "protein_g": 10.9,
+    "carbs_g": 64.72,
+    "sugar_g": 21.85
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

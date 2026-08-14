@@ -1,0 +1,44 @@
+{
+  "food_name": "Upittu, roasted semolina and onions",
+  "ingredients": [
+    {
+      "ingredient": "semolina",
+      "grams": 165,
+      "note": "1 cup semolina/rava",
+      "source": "IFCT A022 Wheat, semolina (rava)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 28,
+      "note": "2 tbsp oil/ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    },
+    {
+      "ingredient": "onion",
+      "grams": 110,
+      "note": "1 medium onion",
+      "source": "IFCT G017 Onion, big"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 3,
+      "note": "1 tsp urad dal tempering",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 3,
+      "note": "1 tsp chana dal tempering",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    }
+  ],
+  "total_mix_grams": 309,
+  "per_100g_nutrients": {
+    "fiber_g": 6.33,
+    "fat_g": 9.56,
+    "protein_g": 7.07,
+    "carbs_g": 40.89,
+    "sugar_g": 2.99
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

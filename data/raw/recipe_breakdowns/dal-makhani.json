@@ -1,0 +1,50 @@
+{
+  "food_name": "Dal makhani",
+  "ingredients": [
+    {
+      "ingredient": "urad_whole",
+      "grams": 800,
+      "note": "4 cups whole urad dal",
+      "source": "IFCT B004 Black gram, whole (whole urad)"
+    },
+    {
+      "ingredient": "rajmah_red",
+      "grams": 200,
+      "note": "1 cup rajma",
+      "source": "IFCT B020 Rajmah, red (kidney beans)"
+    },
+    {
+      "ingredient": "butter",
+      "grams": 35.0,
+      "note": "2.5 tbsp butter",
+      "source": "published (USDA FDC, salted butter)"
+    },
+    {
+      "ingredient": "cream",
+      "grams": 120.0,
+      "note": "0.5 cup cream",
+      "source": "published (USDA FDC, heavy cream, ~36% fat)"
+    },
+    {
+      "ingredient": "onion",
+      "grams": 75,
+      "note": "onion, ~0.5 cup",
+      "source": "IFCT G017 Onion, big"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 90,
+      "note": "tomato, ~0.5 cup",
+      "source": "IFCT D076 Tomato, ripe, local"
+    }
+  ],
+  "total_mix_grams": 1320.0,
+  "per_100g_nutrients": {
+    "fiber_g": 15.14,
+    "fat_g": 6.72,
+    "protein_g": 16.69,
+    "carbs_g": 35.01,
+    "sugar_g": 1.48
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

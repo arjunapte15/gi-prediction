@@ -1,0 +1,26 @@
+{
+  "food_name": "Rice idli (commercial dry mix)",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 760,
+      "note": "4 cups rice",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 200,
+      "note": "1 cup urad dal",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    }
+  ],
+  "total_mix_grams": 960,
+  "per_100g_nutrients": {
+    "fiber_g": 4.71,
+    "fat_g": 0.76,
+    "protein_g": 11.09,
+    "carbs_g": 72.56,
+    "sugar_g": 0.72
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

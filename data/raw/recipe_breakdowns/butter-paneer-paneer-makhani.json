@@ -1,0 +1,44 @@
+{
+  "food_name": "Butter paneer (paneer makhani)",
+  "ingredients": [
+    {
+      "ingredient": "paneer",
+      "grams": 400,
+      "note": "400g paneer",
+      "source": "IFCT L003 Paneer"
+    },
+    {
+      "ingredient": "butter",
+      "grams": 56,
+      "note": "0.25 cup butter",
+      "source": "published (USDA FDC, salted butter)"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 360,
+      "note": "2 cups tomato puree",
+      "source": "IFCT D076 Tomato, ripe, local"
+    },
+    {
+      "ingredient": "cream",
+      "grams": 240,
+      "note": "1 cup cream",
+      "source": "published (USDA FDC, heavy cream, ~36% fat)"
+    },
+    {
+      "ingredient": "honey",
+      "grams": 40,
+      "note": "2 tbsp sugar/honey",
+      "source": "published (USDA FDC, honey)"
+    }
+  ],
+  "total_mix_grams": 1096,
+  "per_100g_nutrients": {
+    "fiber_g": 0.59,
+    "fat_g": 21.28,
+    "protein_g": 7.69,
+    "carbs_g": 5.39,
+    "sugar_g": 4.93
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

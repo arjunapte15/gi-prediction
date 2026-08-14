@@ -1,0 +1,26 @@
+{
+  "food_name": "Puttu/Pittu, industrially-milled finger millet flour",
+  "ingredients": [
+    {
+      "ingredient": "ragi",
+      "grams": 240,
+      "note": "2 cups finger millet flour",
+      "source": "IFCT A010 Ragi (finger millet, whole)"
+    },
+    {
+      "ingredient": "coconut_fresh",
+      "grams": 80,
+      "note": "1 cup grated coconut",
+      "source": "IFCT H007 Coconut, kernel, fresh"
+    }
+  ],
+  "total_mix_grams": 320,
+  "per_100g_nutrients": {
+    "fiber_g": 10.99,
+    "fat_g": 11.79,
+    "protein_g": 6.33,
+    "carbs_g": 51.69,
+    "sugar_g": 1.81
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

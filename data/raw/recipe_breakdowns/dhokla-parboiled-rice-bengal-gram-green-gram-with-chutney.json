@@ -1,0 +1,38 @@
+{
+  "food_name": "Dhokla, parboiled rice, Bengal gram, green gram, with chutney",
+  "ingredients": [
+    {
+      "ingredient": "rice_parboiled",
+      "grams": 190,
+      "note": "1 cup parboiled rice",
+      "source": "IFCT A014 Rice, parboiled, milled"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 200,
+      "note": "1 cup Bengal gram dal",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "moong_dal",
+      "grams": 200,
+      "note": "1 cup green gram dal",
+      "source": "IFCT B010 Green gram, dal (moong dal)"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 18,
+      "note": "chutney side, ~18g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 608,
+  "per_100g_nutrients": {
+    "fiber_g": 9.54,
+    "fat_g": 3.59,
+    "protein_g": 17.5,
+    "carbs_g": 56.97,
+    "sugar_g": 1.04
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

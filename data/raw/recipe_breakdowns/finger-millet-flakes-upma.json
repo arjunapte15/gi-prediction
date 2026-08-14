@@ -1,0 +1,38 @@
+{
+  "food_name": "Finger millet flakes upma",
+  "ingredients": [
+    {
+      "ingredient": "ragi",
+      "grams": 120,
+      "note": "1 cup ragi flakes (flour composition used, see notes)",
+      "source": "IFCT A010 Ragi (finger millet, whole)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 28,
+      "note": "2 tbsp oil/ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 3,
+      "note": "1 tsp urad dal tempering",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 3,
+      "note": "1 tsp chana dal tempering",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    }
+  ],
+  "total_mix_grams": 154,
+  "per_100g_nutrients": {
+    "fiber_g": 9.24,
+    "fat_g": 19.72,
+    "protein_g": 6.5,
+    "carbs_g": 53.97,
+    "sugar_g": 0.3
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

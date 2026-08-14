@@ -1,0 +1,50 @@
+{
+  "food_name": "Broken wheat upma, with green gram, chutney",
+  "ingredients": [
+    {
+      "ingredient": "wheat_bulgur",
+      "grams": 170,
+      "note": "1 cup broken wheat/daliya",
+      "source": "IFCT A021 Wheat, bulgur (broken wheat proxy)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 28,
+      "note": "2 tbsp oil/ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 3,
+      "note": "1 tsp urad dal tempering",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 3,
+      "note": "1 tsp chana dal tempering",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "moong_dal",
+      "grams": 42.5,
+      "note": "green gram, ~1:4 ratio to grain",
+      "source": "IFCT B010 Green gram, dal (moong dal)"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 18,
+      "note": "chutney side, ~18g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 264.5,
+  "per_100g_nutrients": {
+    "fiber_g": 8.18,
+    "fat_g": 14.58,
+    "protein_g": 11.6,
+    "carbs_g": 54.37,
+    "sugar_g": 1.37
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

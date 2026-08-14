@@ -1,0 +1,20 @@
+{
+  "food_name": "Cheela, bengal gram",
+  "ingredients": [
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 100,
+      "note": "100% besan basis",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    }
+  ],
+  "total_mix_grams": 100,
+  "per_100g_nutrients": {
+    "fiber_g": 15.15,
+    "fat_g": 5.31,
+    "protein_g": 21.55,
+    "carbs_g": 46.72,
+    "sugar_g": 1.03
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

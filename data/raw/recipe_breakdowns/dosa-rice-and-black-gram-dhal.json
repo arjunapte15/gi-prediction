@@ -1,0 +1,26 @@
+{
+  "food_name": "Dosa, rice and black gram dhal",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 570,
+      "note": "3 cups rice",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 200,
+      "note": "1 cup urad dal",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    }
+  ],
+  "total_mix_grams": 770,
+  "per_100g_nutrients": {
+    "fiber_g": 5.18,
+    "fat_g": 0.82,
+    "protein_g": 11.87,
+    "carbs_g": 71.16,
+    "sugar_g": 0.73
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

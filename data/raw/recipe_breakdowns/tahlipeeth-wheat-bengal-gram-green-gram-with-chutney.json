@@ -1,0 +1,38 @@
+{
+  "food_name": "Tahlipeeth, wheat/bengal gram/green gram, with chutney",
+  "ingredients": [
+    {
+      "ingredient": "wheat_flour_atta",
+      "grams": 360,
+      "note": "3 cups wheat flour",
+      "source": "IFCT A019 Wheat flour, atta"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 60.0,
+      "note": "0.5 cup Bengal gram flour",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "moong_dal",
+      "grams": 60.0,
+      "note": "0.5 cup green gram flour",
+      "source": "IFCT B010 Green gram, dal (moong dal)"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 18,
+      "note": "chutney side, ~18g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 498.0,
+  "per_100g_nutrients": {
+    "fiber_g": 11.54,
+    "fat_g": 3.4,
+    "protein_g": 13.25,
+    "carbs_g": 58.58,
+    "sugar_g": 1.76
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

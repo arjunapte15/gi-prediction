@@ -1,0 +1,32 @@
+{
+  "food_name": "Poha, rice flakes with ground nuts",
+  "ingredients": [
+    {
+      "ingredient": "rice_flakes",
+      "grams": 80,
+      "note": "1 cup poha",
+      "source": "IFCT A011 Rice flakes (poha)"
+    },
+    {
+      "ingredient": "groundnut",
+      "grams": 27,
+      "note": "3 tbsp peanuts",
+      "source": "IFCT H012 Ground nut (peanut)"
+    },
+    {
+      "ingredient": "veg_oil",
+      "grams": 14,
+      "note": "1 tbsp oil",
+      "source": "published (generic vegetable oil)"
+    }
+  ],
+  "total_mix_grams": 121,
+  "per_100g_nutrients": {
+    "fiber_g": 4.6,
+    "fat_g": 21.17,
+    "protein_g": 10.2,
+    "carbs_g": 54.6,
+    "sugar_g": 1.21
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

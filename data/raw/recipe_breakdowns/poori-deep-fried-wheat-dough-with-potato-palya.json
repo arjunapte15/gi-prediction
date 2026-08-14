@@ -1,0 +1,32 @@
+{
+  "food_name": "Poori, deep-fried wheat dough, with potato palya",
+  "ingredients": [
+    {
+      "ingredient": "wheat_flour_atta",
+      "grams": 120,
+      "note": "1 cup wheat flour",
+      "source": "IFCT A019 Wheat flour, atta"
+    },
+    {
+      "ingredient": "veg_oil",
+      "grams": 10,
+      "note": "2 tsp oil in dough (see notes: excludes frying absorption)",
+      "source": "published (generic vegetable oil)"
+    },
+    {
+      "ingredient": "potato",
+      "grams": 100,
+      "note": "potato palya side, ~100g",
+      "source": "IFCT F006 Potato, brown skin, big"
+    }
+  ],
+  "total_mix_grams": 230,
+  "per_100g_nutrients": {
+    "fiber_g": 6.67,
+    "fat_g": 5.25,
+    "protein_g": 6.18,
+    "carbs_g": 39.95,
+    "sugar_g": 1.08
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

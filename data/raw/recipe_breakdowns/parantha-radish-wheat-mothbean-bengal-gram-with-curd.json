@@ -1,0 +1,44 @@
+{
+  "food_name": "Parantha, radish, wheat/mothbean/Bengal gram, with curd",
+  "ingredients": [
+    {
+      "ingredient": "wheat_flour_atta",
+      "grams": 360,
+      "note": "3 cups wheat flour",
+      "source": "IFCT A019 Wheat flour, atta"
+    },
+    {
+      "ingredient": "moth_bean",
+      "grams": 60.0,
+      "note": "0.5 cup mothbean flour",
+      "source": "IFCT B016 Moth bean"
+    },
+    {
+      "ingredient": "bengal_gram_dal",
+      "grams": 60.0,
+      "note": "0.5 cup Bengal gram flour",
+      "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
+    },
+    {
+      "ingredient": "radish",
+      "grams": 100,
+      "note": "radish filling, ~100g",
+      "source": "IFCT F010 Radish, elongate, white skin"
+    },
+    {
+      "ingredient": "yogurt",
+      "grams": 37.5,
+      "note": "curd side, ~2.5 tbsp",
+      "source": "published (USDA FDC, plain whole-milk yogurt)"
+    }
+  ],
+  "total_mix_grams": 617.5,
+  "per_100g_nutrients": {
+    "fiber_g": 9.99,
+    "fat_g": 1.88,
+    "protein_g": 10.54,
+    "carbs_g": 48.41,
+    "sugar_g": 1.72
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

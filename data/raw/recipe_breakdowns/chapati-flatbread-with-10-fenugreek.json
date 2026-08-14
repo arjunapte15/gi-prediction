@@ -1,0 +1,26 @@
+{
+  "food_name": "Chapati, flatbread with 10% fenugreek",
+  "ingredients": [
+    {
+      "ingredient": "wheat_flour_atta",
+      "grams": 90,
+      "note": "90% wheat flour",
+      "source": "IFCT A019 Wheat flour, atta"
+    },
+    {
+      "ingredient": "fenugreek_seeds",
+      "grams": 10,
+      "note": "10% fenugreek (seeds used as dry-basis proxy, see notes)",
+      "source": "IFCT G026 Fenugreek seeds"
+    }
+  ],
+  "total_mix_grams": 100,
+  "per_100g_nutrients": {
+    "fiber_g": 14.98,
+    "fat_g": 1.95,
+    "protein_g": 12.05,
+    "carbs_g": 58.81,
+    "sugar_g": 1.68
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

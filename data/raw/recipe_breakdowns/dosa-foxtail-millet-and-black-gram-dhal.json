@@ -1,0 +1,26 @@
+{
+  "food_name": "Dosa, foxtail millet and black gram dhal",
+  "ingredients": [
+    {
+      "ingredient": "foxtail_millet",
+      "grams": 570,
+      "note": "3 cups foxtail millet",
+      "source": "IFCT A017 Varagu (see caveat: labelled Paspalum scrobiculatum in Table 1 but Setaria italica in Table 6)"
+    },
+    {
+      "ingredient": "urad_dal",
+      "grams": 200,
+      "note": "1 cup urad dal",
+      "source": "IFCT B003 Black gram, dal (urad dal)"
+    }
+  ],
+  "total_mix_grams": 770,
+  "per_100g_nutrients": {
+    "fiber_g": 7.83,
+    "fat_g": 2.33,
+    "protein_g": 12.59,
+    "carbs_g": 62.24,
+    "sugar_g": 1.17
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

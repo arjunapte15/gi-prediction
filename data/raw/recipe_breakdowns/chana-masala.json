@@ -1,0 +1,44 @@
+{
+  "food_name": "Chana masala",
+  "ingredients": [
+    {
+      "ingredient": "bengal_gram_whole",
+      "grams": 200,
+      "note": "1 cup chickpeas",
+      "source": "IFCT B002 Bengal gram, whole (chickpea/garbanzo proxy)"
+    },
+    {
+      "ingredient": "ghee",
+      "grams": 42,
+      "note": "3 tbsp ghee",
+      "source": "published (USDA FDC, ghee/clarified butter)"
+    },
+    {
+      "ingredient": "potato",
+      "grams": 300,
+      "note": "2 medium potatoes",
+      "source": "IFCT F006 Potato, brown skin, big"
+    },
+    {
+      "ingredient": "onion",
+      "grams": 220,
+      "note": "2 medium onions",
+      "source": "IFCT G017 Onion, big"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 492,
+      "note": "4 medium tomatoes",
+      "source": "IFCT D076 Tomato, ripe, local"
+    }
+  ],
+  "total_mix_grams": 1254,
+  "per_100g_nutrients": {
+    "fiber_g": 5.56,
+    "fat_g": 4.43,
+    "protein_g": 3.99,
+    "carbs_g": 12.61,
+    "sugar_g": 1.79
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

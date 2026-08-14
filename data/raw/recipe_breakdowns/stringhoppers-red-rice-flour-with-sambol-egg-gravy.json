@@ -1,0 +1,38 @@
+{
+  "food_name": "Stringhoppers, red rice flour, with sambol/egg/gravy",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "grams": 150,
+      "note": "rice flour dough, ~150g dry-equivalent",
+      "source": "IFCT A015 Rice, raw, milled"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 30,
+      "note": "coconut sambol, ~30g",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    },
+    {
+      "ingredient": "egg",
+      "grams": 50,
+      "note": "1 egg",
+      "source": "IFCT M001 Egg, poultry, whole, raw"
+    },
+    {
+      "ingredient": "coconut_chutney",
+      "grams": 25,
+      "note": "coconut gravy, ~50ml treated as 25g coconut-equivalent",
+      "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
+    }
+  ],
+  "total_mix_grams": 255,
+  "per_100g_nutrients": {
+    "fiber_g": 3.9,
+    "fat_g": 11.03,
+    "protein_g": 8.1,
+    "carbs_g": 47.38,
+    "sugar_g": 1.74
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

@@ -1,0 +1,38 @@
+{
+  "food_name": "Chicken curry (generic)",
+  "ingredients": [
+    {
+      "ingredient": "chicken",
+      "grams": 400,
+      "note": "400g chicken",
+      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)"
+    },
+    {
+      "ingredient": "onion",
+      "grams": 150,
+      "note": "1 cup chopped onion",
+      "source": "IFCT G017 Onion, big"
+    },
+    {
+      "ingredient": "tomato",
+      "grams": 180,
+      "note": "1 cup chopped tomato",
+      "source": "IFCT D076 Tomato, ripe, local"
+    },
+    {
+      "ingredient": "veg_oil",
+      "grams": 35.0,
+      "note": "2.5 tbsp oil",
+      "source": "published (generic vegetable oil)"
+    }
+  ],
+  "total_mix_grams": 765.0,
+  "per_100g_nutrients": {
+    "fiber_g": 0.9,
+    "fat_g": 11.23,
+    "protein_g": 10.55,
+    "carbs_g": 2.51,
+    "sugar_g": 1.47
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}

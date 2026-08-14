@@ -1,0 +1,26 @@
+{
+  "food_name": "Tandoori chicken",
+  "ingredients": [
+    {
+      "ingredient": "chicken",
+      "grams": 400,
+      "note": "400g chicken",
+      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)"
+    },
+    {
+      "ingredient": "yogurt",
+      "grams": 122.5,
+      "note": "0.5 cup yogurt marinade",
+      "source": "published (USDA FDC, plain whole-milk yogurt)"
+    }
+  ],
+  "total_mix_grams": 522.5,
+  "per_100g_nutrients": {
+    "fiber_g": 0.0,
+    "fat_g": 10.56,
+    "protein_g": 15.62,
+    "carbs_g": 1.31,
+    "sugar_g": 1.1
+  },
+  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+}
