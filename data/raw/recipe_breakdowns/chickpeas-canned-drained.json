@@ -1,0 +1,30 @@
+{
+  "food_name": "Chickpeas, canned, drained",
+  "ingredients": [
+    {
+      "ingredient": "bengal_gram_whole",
+      "raw_grams": 100,
+      "yield_factor": 2.5,
+      "cooked_grams": 250.0,
+      "note": "direct IFCT lookup",
+      "source": "IFCT B002 Bengal gram, whole (chickpea/garbanzo proxy)"
+    }
+  ],
+  "total_raw_grams": 100,
+  "total_cooked_grams": 250.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 10.09,
+    "fat_g": 2.04,
+    "protein_g": 7.51,
+    "carbs_g": 15.82,
+    "sugar_g": 0.4
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 25.22,
+    "fat_g": 5.11,
+    "protein_g": 18.77,
+    "carbs_g": 39.56,
+    "sugar_g": 0.99
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
+}

@@ -3,24 +3,36 @@
   "ingredients": [
     {
       "ingredient": "wheat_flour_atta",
-      "grams": 90,
-      "note": "90% wheat flour",
+      "raw_grams": 90,
+      "yield_factor": 1.35,
+      "cooked_grams": 121.5,
+      "note": "90% wheat flour, dough, cooked on tawa",
       "source": "IFCT A019 Wheat flour, atta"
     },
     {
       "ingredient": "fenugreek_seeds",
-      "grams": 10,
+      "raw_grams": 10,
+      "yield_factor": 1.0,
+      "cooked_grams": 10.0,
       "note": "10% fenugreek (seeds used as dry-basis proxy, see notes)",
       "source": "IFCT G026 Fenugreek seeds"
     }
   ],
-  "total_mix_grams": 100,
-  "per_100g_nutrients": {
+  "total_raw_grams": 100,
+  "total_cooked_grams": 131.5,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 11.39,
+    "fat_g": 1.48,
+    "protein_g": 9.17,
+    "carbs_g": 44.72,
+    "sugar_g": 1.27
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 14.98,
     "fat_g": 1.95,
     "protein_g": 12.05,
     "carbs_g": 58.81,
     "sugar_g": 1.68
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

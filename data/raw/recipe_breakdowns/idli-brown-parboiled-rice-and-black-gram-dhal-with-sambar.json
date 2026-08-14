@@ -3,36 +3,52 @@
   "ingredients": [
     {
       "ingredient": "rice_parboiled",
-      "grams": 760,
+      "raw_grams": 760,
+      "yield_factor": 2.5,
+      "cooked_grams": 1900.0,
       "note": "4 cups parboiled rice",
       "source": "IFCT A014 Rice, parboiled, milled"
     },
     {
       "ingredient": "urad_dal",
-      "grams": 200,
+      "raw_grams": 200,
+      "yield_factor": 1.5,
+      "cooked_grams": 300.0,
       "note": "1 cup urad dal",
       "source": "IFCT B003 Black gram, dal (urad dal)"
     },
     {
       "ingredient": "toor_dal",
-      "grams": 15,
-      "note": "sambar dal, dry-equivalent ~15g",
+      "raw_grams": 15,
+      "yield_factor": 2.3,
+      "cooked_grams": 34.5,
+      "note": "sambar dal, dry-equivalent ~15g, boiled in sambar (not batter)",
       "source": "IFCT B021 Red gram, dal (toor/arhar dal, for sambar)"
     },
     {
       "ingredient": "tomato",
-      "grams": 10,
+      "raw_grams": 10,
+      "yield_factor": 1.0,
+      "cooked_grams": 10.0,
       "note": "sambar vegetable, ~10g tomato-equivalent",
       "source": "IFCT D076 Tomato, ripe, local"
     }
   ],
-  "total_mix_grams": 985,
-  "per_100g_nutrients": {
+  "total_raw_grams": 985,
+  "total_cooked_grams": 2244.5,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 2.4,
+    "fat_g": 0.35,
+    "protein_g": 4.85,
+    "carbs_g": 31.05,
+    "sugar_g": 0.32
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 5.46,
     "fat_g": 0.8,
     "protein_g": 11.05,
     "carbs_g": 70.76,
     "sugar_g": 0.73
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

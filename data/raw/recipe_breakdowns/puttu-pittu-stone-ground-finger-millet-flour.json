@@ -3,24 +3,36 @@
   "ingredients": [
     {
       "ingredient": "ragi",
-      "grams": 240,
-      "note": "2 cups finger millet flour",
+      "raw_grams": 240,
+      "yield_factor": 1.8,
+      "cooked_grams": 432.0,
+      "note": "2 cups finger millet flour, layered/pressed, steamed",
       "source": "IFCT A010 Ragi (finger millet, whole)"
     },
     {
       "ingredient": "coconut_fresh",
-      "grams": 80,
-      "note": "1 cup grated coconut",
+      "raw_grams": 80,
+      "yield_factor": 1.0,
+      "cooked_grams": 80.0,
+      "note": "1 cup grated coconut, used raw",
       "source": "IFCT H007 Coconut, kernel, fresh"
     }
   ],
-  "total_mix_grams": 320,
-  "per_100g_nutrients": {
+  "total_raw_grams": 320,
+  "total_cooked_grams": 512.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 6.87,
+    "fat_g": 7.37,
+    "protein_g": 3.96,
+    "carbs_g": 32.31,
+    "sugar_g": 1.13
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 10.99,
     "fat_g": 11.79,
     "protein_g": 6.33,
     "carbs_g": 51.69,
     "sugar_g": 1.81
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

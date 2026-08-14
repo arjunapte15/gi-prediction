@@ -3,42 +3,60 @@
   "ingredients": [
     {
       "ingredient": "bengal_gram_whole",
-      "grams": 200,
-      "note": "1 cup chickpeas",
+      "raw_grams": 200,
+      "yield_factor": 2.5,
+      "cooked_grams": 500.0,
+      "note": "1 cup chickpeas, boiled",
       "source": "IFCT B002 Bengal gram, whole (chickpea/garbanzo proxy)"
     },
     {
       "ingredient": "ghee",
-      "grams": 42,
+      "raw_grams": 42,
+      "yield_factor": 1.0,
+      "cooked_grams": 42.0,
       "note": "3 tbsp ghee",
       "source": "published (USDA FDC, ghee/clarified butter)"
     },
     {
       "ingredient": "potato",
-      "grams": 300,
+      "raw_grams": 300,
+      "yield_factor": 1.0,
+      "cooked_grams": 300.0,
       "note": "2 medium potatoes",
       "source": "IFCT F006 Potato, brown skin, big"
     },
     {
       "ingredient": "onion",
-      "grams": 220,
+      "raw_grams": 220,
+      "yield_factor": 1.0,
+      "cooked_grams": 220.0,
       "note": "2 medium onions",
       "source": "IFCT G017 Onion, big"
     },
     {
       "ingredient": "tomato",
-      "grams": 492,
+      "raw_grams": 492,
+      "yield_factor": 1.0,
+      "cooked_grams": 492.0,
       "note": "4 medium tomatoes",
       "source": "IFCT D076 Tomato, ripe, local"
     }
   ],
-  "total_mix_grams": 1254,
-  "per_100g_nutrients": {
+  "total_raw_grams": 1254,
+  "total_cooked_grams": 1554.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 4.48,
+    "fat_g": 3.57,
+    "protein_g": 3.22,
+    "carbs_g": 10.18,
+    "sugar_g": 1.45
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 5.56,
     "fat_g": 4.43,
     "protein_g": 3.99,
     "carbs_g": 12.61,
     "sugar_g": 1.79
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

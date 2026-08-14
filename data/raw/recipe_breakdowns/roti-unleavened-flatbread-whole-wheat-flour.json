@@ -1,0 +1,30 @@
+{
+  "food_name": "Roti (unleavened flatbread), whole wheat flour",
+  "ingredients": [
+    {
+      "ingredient": "wheat_flour_atta",
+      "raw_grams": 100,
+      "yield_factor": 1.35,
+      "cooked_grams": 135.0,
+      "note": "direct IFCT lookup",
+      "source": "IFCT A019 Wheat flour, atta"
+    }
+  ],
+  "total_raw_grams": 100,
+  "total_cooked_grams": 135.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 8.41,
+    "fat_g": 1.13,
+    "protein_g": 7.83,
+    "carbs_g": 47.53,
+    "sugar_g": 1.33
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 11.36,
+    "fat_g": 1.53,
+    "protein_g": 10.57,
+    "carbs_g": 64.17,
+    "sugar_g": 1.8
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
+}

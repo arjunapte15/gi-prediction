@@ -3,30 +3,44 @@
   "ingredients": [
     {
       "ingredient": "wheat_flour_atta",
-      "grams": 120,
-      "note": "1 cup wheat flour",
+      "raw_grams": 120,
+      "yield_factor": 1.35,
+      "cooked_grams": 162.0,
+      "note": "1 cup wheat flour, dough, deep-fried",
       "source": "IFCT A019 Wheat flour, atta"
     },
     {
       "ingredient": "veg_oil",
-      "grams": 10,
+      "raw_grams": 10,
+      "yield_factor": 1.0,
+      "cooked_grams": 10.0,
       "note": "2 tsp oil in dough (see notes: excludes frying absorption)",
       "source": "published (generic vegetable oil)"
     },
     {
       "ingredient": "potato",
-      "grams": 100,
+      "raw_grams": 100,
+      "yield_factor": 1.0,
+      "cooked_grams": 100.0,
       "note": "potato palya side, ~100g",
       "source": "IFCT F006 Potato, brown skin, big"
     }
   ],
-  "total_mix_grams": 230,
-  "per_100g_nutrients": {
+  "total_raw_grams": 230,
+  "total_cooked_grams": 272.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 5.64,
+    "fat_g": 4.44,
+    "protein_g": 5.23,
+    "carbs_g": 33.78,
+    "sugar_g": 0.91
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 6.67,
     "fat_g": 5.25,
     "protein_g": 6.18,
     "carbs_g": 39.95,
     "sugar_g": 1.08
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

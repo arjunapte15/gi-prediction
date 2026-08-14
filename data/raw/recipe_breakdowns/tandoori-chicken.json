@@ -3,24 +3,36 @@
   "ingredients": [
     {
       "ingredient": "chicken",
-      "grams": 400,
-      "note": "400g chicken",
-      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)"
+      "raw_grams": 400,
+      "yield_factor": 0.75,
+      "cooked_grams": 300.0,
+      "note": "400g chicken, cooked (raw-chicken source, see notes)",
+      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless, RAW)"
     },
     {
       "ingredient": "yogurt",
-      "grams": 122.5,
+      "raw_grams": 122.5,
+      "yield_factor": 1.0,
+      "cooked_grams": 122.5,
       "note": "0.5 cup yogurt marinade",
       "source": "published (USDA FDC, plain whole-milk yogurt)"
     }
   ],
-  "total_mix_grams": 522.5,
-  "per_100g_nutrients": {
+  "total_raw_grams": 522.5,
+  "total_cooked_grams": 422.5,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 0.0,
+    "fat_g": 13.06,
+    "protein_g": 19.32,
+    "carbs_g": 1.62,
+    "sugar_g": 1.36
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 0.0,
     "fat_g": 10.56,
     "protein_g": 15.62,
     "carbs_g": 1.31,
     "sugar_g": 1.1
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

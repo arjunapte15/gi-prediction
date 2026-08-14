@@ -3,36 +3,52 @@
   "ingredients": [
     {
       "ingredient": "wheat_flour_atta",
-      "grams": 360,
-      "note": "3 cups wheat flour",
+      "raw_grams": 360,
+      "yield_factor": 1.35,
+      "cooked_grams": 486.0,
+      "note": "3 cups wheat flour, dough, cooked on tawa",
       "source": "IFCT A019 Wheat flour, atta"
     },
     {
       "ingredient": "bengal_gram_dal",
-      "grams": 60.0,
-      "note": "0.5 cup Bengal gram flour",
+      "raw_grams": 60.0,
+      "yield_factor": 1.35,
+      "cooked_grams": 81.0,
+      "note": "0.5 cup Bengal gram flour, mixed into the same dough",
       "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
     },
     {
       "ingredient": "moong_dal",
-      "grams": 60.0,
-      "note": "0.5 cup green gram flour",
+      "raw_grams": 60.0,
+      "yield_factor": 1.35,
+      "cooked_grams": 81.0,
+      "note": "0.5 cup green gram flour, mixed into the same dough",
       "source": "IFCT B010 Green gram, dal (moong dal)"
     },
     {
       "ingredient": "coconut_chutney",
-      "grams": 18,
+      "raw_grams": 18,
+      "yield_factor": 1.0,
+      "cooked_grams": 18.0,
       "note": "chutney side, ~18g",
       "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
     }
   ],
-  "total_mix_grams": 498.0,
-  "per_100g_nutrients": {
+  "total_raw_grams": 498.0,
+  "total_cooked_grams": 666.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 8.63,
+    "fat_g": 2.55,
+    "protein_g": 9.91,
+    "carbs_g": 43.8,
+    "sugar_g": 1.32
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 11.54,
     "fat_g": 3.4,
     "protein_g": 13.25,
     "carbs_g": 58.58,
     "sugar_g": 1.76
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

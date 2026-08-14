@@ -3,48 +3,68 @@
   "ingredients": [
     {
       "ingredient": "chicken",
-      "grams": 400,
-      "note": "400g chicken",
-      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)"
+      "raw_grams": 400,
+      "yield_factor": 0.75,
+      "cooked_grams": 300.0,
+      "note": "400g chicken, cooked (raw-chicken source, see notes)",
+      "source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless, RAW)"
     },
     {
       "ingredient": "yogurt",
-      "grams": 122.5,
+      "raw_grams": 122.5,
+      "yield_factor": 1.0,
+      "cooked_grams": 122.5,
       "note": "0.5 cup yogurt marinade",
       "source": "published (USDA FDC, plain whole-milk yogurt)"
     },
     {
       "ingredient": "tomato",
-      "grams": 135.0,
+      "raw_grams": 135.0,
+      "yield_factor": 1.0,
+      "cooked_grams": 135.0,
       "note": "0.75 cup tomato puree",
       "source": "IFCT D076 Tomato, ripe, local"
     },
     {
       "ingredient": "butter",
-      "grams": 42,
+      "raw_grams": 42,
+      "yield_factor": 1.0,
+      "cooked_grams": 42.0,
       "note": "3 tbsp butter",
       "source": "published (USDA FDC, salted butter)"
     },
     {
       "ingredient": "cream",
-      "grams": 45,
+      "raw_grams": 45,
+      "yield_factor": 1.0,
+      "cooked_grams": 45.0,
       "note": "3 tbsp cream",
       "source": "published (USDA FDC, heavy cream, ~36% fat)"
     },
     {
       "ingredient": "honey",
-      "grams": 30.0,
+      "raw_grams": 30.0,
+      "yield_factor": 1.0,
+      "cooked_grams": 30.0,
       "note": "1.5 tbsp honey/sugar",
       "source": "published (USDA FDC, honey)"
     }
   ],
-  "total_mix_grams": 774.5,
-  "per_100g_nutrients": {
+  "total_raw_grams": 774.5,
+  "total_cooked_grams": 674.5,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 0.36,
+    "fat_g": 15.8,
+    "protein_g": 12.49,
+    "carbs_g": 5.41,
+    "sugar_g": 4.96
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 0.32,
     "fat_g": 13.76,
     "protein_g": 10.87,
     "carbs_g": 4.72,
     "sugar_g": 4.32
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

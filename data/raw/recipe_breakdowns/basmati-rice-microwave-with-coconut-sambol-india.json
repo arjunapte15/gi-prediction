@@ -3,24 +3,36 @@
   "ingredients": [
     {
       "ingredient": "rice_milled",
-      "grams": 175,
-      "note": "basmati rice, ~175g dry-equivalent",
+      "raw_grams": 175,
+      "yield_factor": 2.5,
+      "cooked_grams": 437.5,
+      "note": "basmati rice, ~175g dry-equivalent, cooked",
       "source": "IFCT A015 Rice, raw, milled"
     },
     {
       "ingredient": "coconut_chutney",
-      "grams": 25,
+      "raw_grams": 25,
+      "yield_factor": 1.0,
+      "cooked_grams": 25.0,
       "note": "coconut sambol, ~25g",
       "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
     }
   ],
-  "total_mix_grams": 200,
-  "per_100g_nutrients": {
+  "total_raw_grams": 200,
+  "total_cooked_grams": 462.5,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 1.63,
+    "fat_g": 2.43,
+    "protein_g": 3.21,
+    "carbs_g": 29.94,
+    "sugar_g": 0.6
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 3.76,
     "fat_g": 5.63,
     "protein_g": 7.43,
     "carbs_g": 69.25,
     "sugar_g": 1.38
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

@@ -1,0 +1,30 @@
+{
+  "food_name": "Basmati rice, white, polished, cooked 10 min",
+  "ingredients": [
+    {
+      "ingredient": "rice_milled",
+      "raw_grams": 100,
+      "yield_factor": 2.5,
+      "cooked_grams": 250.0,
+      "note": "direct IFCT lookup",
+      "source": "IFCT A015 Rice, raw, milled"
+    }
+  ],
+  "total_raw_grams": 100,
+  "total_cooked_grams": 250.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 1.12,
+    "fat_g": 0.21,
+    "protein_g": 3.18,
+    "carbs_g": 31.3,
+    "sugar_g": 0.28
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 2.81,
+    "fat_g": 0.52,
+    "protein_g": 7.94,
+    "carbs_g": 78.24,
+    "sugar_g": 0.69
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
+}

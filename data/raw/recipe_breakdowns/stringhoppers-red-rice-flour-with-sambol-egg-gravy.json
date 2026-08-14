@@ -3,36 +3,52 @@
   "ingredients": [
     {
       "ingredient": "rice_milled",
-      "grams": 150,
-      "note": "rice flour dough, ~150g dry-equivalent",
+      "raw_grams": 150,
+      "yield_factor": 1.8,
+      "cooked_grams": 270.0,
+      "note": "rice flour dough, ~150g dry-equivalent, pressed/steamed shape",
       "source": "IFCT A015 Rice, raw, milled"
     },
     {
       "ingredient": "coconut_chutney",
-      "grams": 30,
+      "raw_grams": 30,
+      "yield_factor": 1.0,
+      "cooked_grams": 30.0,
       "note": "coconut sambol, ~30g",
       "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
     },
     {
       "ingredient": "egg",
-      "grams": 50,
+      "raw_grams": 50,
+      "yield_factor": 1.0,
+      "cooked_grams": 50.0,
       "note": "1 egg",
       "source": "IFCT M001 Egg, poultry, whole, raw"
     },
     {
       "ingredient": "coconut_chutney",
-      "grams": 25,
+      "raw_grams": 25,
+      "yield_factor": 1.0,
+      "cooked_grams": 25.0,
       "note": "coconut gravy, ~50ml treated as 25g coconut-equivalent",
       "source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)"
     }
   ],
-  "total_mix_grams": 255,
-  "per_100g_nutrients": {
+  "total_raw_grams": 255,
+  "total_cooked_grams": 375.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 2.65,
+    "fat_g": 7.5,
+    "protein_g": 5.51,
+    "carbs_g": 32.22,
+    "sugar_g": 1.19
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 3.9,
     "fat_g": 11.03,
     "protein_g": 8.1,
     "carbs_g": 47.38,
     "sugar_g": 1.74
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

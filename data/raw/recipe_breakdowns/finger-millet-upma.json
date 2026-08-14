@@ -3,36 +3,52 @@
   "ingredients": [
     {
       "ingredient": "ragi",
-      "grams": 120,
+      "raw_grams": 120,
+      "yield_factor": 2.5,
+      "cooked_grams": 300.0,
       "note": "1 cup ragi flour",
       "source": "IFCT A010 Ragi (finger millet, whole)"
     },
     {
       "ingredient": "ghee",
-      "grams": 28,
+      "raw_grams": 28,
+      "yield_factor": 1.0,
+      "cooked_grams": 28.0,
       "note": "2 tbsp oil/ghee",
       "source": "published (USDA FDC, ghee/clarified butter)"
     },
     {
       "ingredient": "urad_dal",
-      "grams": 3,
-      "note": "1 tsp urad dal tempering",
+      "raw_grams": 3,
+      "yield_factor": 1.0,
+      "cooked_grams": 3.0,
+      "note": "1 tsp urad dal tempering (fried briefly, not boiled)",
       "source": "IFCT B003 Black gram, dal (urad dal)"
     },
     {
       "ingredient": "bengal_gram_dal",
-      "grams": 3,
-      "note": "1 tsp chana dal tempering",
+      "raw_grams": 3,
+      "yield_factor": 1.0,
+      "cooked_grams": 3.0,
+      "note": "1 tsp chana dal tempering (fried briefly, not boiled)",
       "source": "IFCT B001 Bengal gram, dal (used for both chana dal and besan/gram flour)"
     }
   ],
-  "total_mix_grams": 154,
-  "per_100g_nutrients": {
+  "total_raw_grams": 154,
+  "total_cooked_grams": 334.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 4.26,
+    "fat_g": 9.09,
+    "protein_g": 3.0,
+    "carbs_g": 24.88,
+    "sugar_g": 0.14
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 9.24,
     "fat_g": 19.72,
     "protein_g": 6.5,
     "carbs_g": 53.97,
     "sugar_g": 0.3
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

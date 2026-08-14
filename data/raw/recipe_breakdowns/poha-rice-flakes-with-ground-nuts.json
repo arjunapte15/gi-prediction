@@ -3,30 +3,44 @@
   "ingredients": [
     {
       "ingredient": "rice_flakes",
-      "grams": 80,
-      "note": "1 cup poha",
+      "raw_grams": 80,
+      "yield_factor": 1.0,
+      "cooked_grams": 80.0,
+      "note": "1 cup poha (already-parboiled/flaked, briefly rehydrated -- see notes)",
       "source": "IFCT A011 Rice flakes (poha)"
     },
     {
       "ingredient": "groundnut",
-      "grams": 27,
+      "raw_grams": 27,
+      "yield_factor": 1.0,
+      "cooked_grams": 27.0,
       "note": "3 tbsp peanuts",
       "source": "IFCT H012 Ground nut (peanut)"
     },
     {
       "ingredient": "veg_oil",
-      "grams": 14,
+      "raw_grams": 14,
+      "yield_factor": 1.0,
+      "cooked_grams": 14.0,
       "note": "1 tbsp oil",
       "source": "published (generic vegetable oil)"
     }
   ],
-  "total_mix_grams": 121,
-  "per_100g_nutrients": {
+  "total_raw_grams": 121,
+  "total_cooked_grams": 121.0,
+  "per_100g_nutrients_cooked_basis": {
     "fiber_g": 4.6,
     "fat_g": 21.17,
     "protein_g": 10.2,
     "carbs_g": 54.6,
     "sugar_g": 1.21
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 4.6,
+    "fat_g": 21.17,
+    "protein_g": 10.2,
+    "carbs_g": 54.6,
+    "sugar_g": 1.21
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

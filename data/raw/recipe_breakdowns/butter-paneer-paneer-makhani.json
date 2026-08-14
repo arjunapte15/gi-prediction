@@ -3,42 +3,60 @@
   "ingredients": [
     {
       "ingredient": "paneer",
-      "grams": 400,
-      "note": "400g paneer",
+      "raw_grams": 400,
+      "yield_factor": 1.0,
+      "cooked_grams": 400.0,
+      "note": "400g paneer (already ready-to-eat form, see notes -- no correction)",
       "source": "IFCT L003 Paneer"
     },
     {
       "ingredient": "butter",
-      "grams": 56,
+      "raw_grams": 56,
+      "yield_factor": 1.0,
+      "cooked_grams": 56.0,
       "note": "0.25 cup butter",
       "source": "published (USDA FDC, salted butter)"
     },
     {
       "ingredient": "tomato",
-      "grams": 360,
+      "raw_grams": 360,
+      "yield_factor": 1.0,
+      "cooked_grams": 360.0,
       "note": "2 cups tomato puree",
       "source": "IFCT D076 Tomato, ripe, local"
     },
     {
       "ingredient": "cream",
-      "grams": 240,
+      "raw_grams": 240,
+      "yield_factor": 1.0,
+      "cooked_grams": 240.0,
       "note": "1 cup cream",
       "source": "published (USDA FDC, heavy cream, ~36% fat)"
     },
     {
       "ingredient": "honey",
-      "grams": 40,
+      "raw_grams": 40,
+      "yield_factor": 1.0,
+      "cooked_grams": 40.0,
       "note": "2 tbsp sugar/honey",
       "source": "published (USDA FDC, honey)"
     }
   ],
-  "total_mix_grams": 1096,
-  "per_100g_nutrients": {
+  "total_raw_grams": 1096,
+  "total_cooked_grams": 1096.0,
+  "per_100g_nutrients_cooked_basis": {
     "fiber_g": 0.59,
     "fat_g": 21.28,
     "protein_g": 7.69,
     "carbs_g": 5.39,
     "sugar_g": 4.93
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 0.59,
+    "fat_g": 21.28,
+    "protein_g": 7.69,
+    "carbs_g": 5.39,
+    "sugar_g": 4.93
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }

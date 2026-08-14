@@ -1,0 +1,30 @@
+{
+  "food_name": "Unpolished little millet, plain cooked",
+  "ingredients": [
+    {
+      "ingredient": "little_millet",
+      "raw_grams": 100,
+      "yield_factor": 2.5,
+      "cooked_grams": 250.0,
+      "note": "direct IFCT lookup",
+      "source": "IFCT A016 Samai (Panicum miliare)"
+    }
+  ],
+  "total_raw_grams": 100,
+  "total_cooked_grams": 250.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 3.09,
+    "fat_g": 1.56,
+    "protein_g": 4.05,
+    "carbs_g": 26.22,
+    "sugar_g": 0.15
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 7.72,
+    "fat_g": 3.89,
+    "protein_g": 10.13,
+    "carbs_g": 65.55,
+    "sugar_g": 0.37
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
+}

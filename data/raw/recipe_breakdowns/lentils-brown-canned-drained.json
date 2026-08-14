@@ -1,0 +1,30 @@
+{
+  "food_name": "Lentils, brown, canned, drained",
+  "ingredients": [
+    {
+      "ingredient": "lentil_brown",
+      "raw_grams": 100,
+      "yield_factor": 2.5,
+      "cooked_grams": 250.0,
+      "note": "direct IFCT lookup",
+      "source": "IFCT B014 Lentil whole, brown (masoor)"
+    }
+  ],
+  "total_raw_grams": 100,
+  "total_cooked_grams": 250.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 6.73,
+    "fat_g": 0.26,
+    "protein_g": 9.0,
+    "carbs_g": 19.39,
+    "sugar_g": 0.65
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
+    "fiber_g": 16.82,
+    "fat_g": 0.64,
+    "protein_g": 22.49,
+    "carbs_g": 48.47,
+    "sugar_g": 1.63
+  },
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
+}

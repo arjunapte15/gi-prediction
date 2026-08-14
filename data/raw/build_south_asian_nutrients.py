@@ -4,11 +4,14 @@ Builds data/raw/south_asian_nutrients.csv from IFCT 2017 raw-ingredient values
 ingredients IFCT lacks, combined with the recipe proportions documented in
 data/raw/south_asian_decomposition_notes.md.
 
-All nutrient values are expressed per 100g of the food's raw/dry ingredient
-mix (not per 100g of the cooked, water-diluted finished dish) -- see the
-decomposition notes for why. For composite dishes this is a mass-weighted
-average of the per-100g values of the ingredients that go into the dish, so
-only ingredient MASS RATIOS matter, not absolute serving size.
+All nutrient values are expressed per 100g of the food's COOKED/AS-EATEN
+weight (post-Phase-4 cooking-yield fix -- see the decomposition notes'
+"Cooking-yield correction" section). IFCT and published ingredient values are
+per 100g of the RAW ingredient; a per-ingredient yield_factor converts each
+ingredient's raw mass to its effective cooked mass (raw_mass * yield_factor)
+before the dish's per-100g-cooked nutrient density is computed. Total
+nutrient content of an ingredient is unaffected by cooking (cooking water
+carries no macros), so only the MASS denominator changes.
 
 Re-running this script regenerates south_asian_nutrients.csv and the
 data/raw/recipe_breakdowns/*.json files from the INGREDIENTS/DISHES tables
@@ -23,7 +26,23 @@ BREAKDOWN_DIR = RAW_DIR / "recipe_breakdowns"
 
 NUTRIENT_KEYS = ["fiber_g", "fat_g", "protein_g", "carbs_g", "sugar_g"]
 
-# Per-100g nutrient values for raw/dry ingredients.
+# Cooking-yield factors: cooked_mass = raw_mass * yield_factor.
+# >1 = dilution (water absorbed during boiling/steaming/dough hydration).
+# <1 = concentration (moisture lost during cooking, e.g. chicken).
+# See data/raw/south_asian_decomposition_notes.md "Cooking-yield correction"
+# for sourcing and per-category reasoning.
+Y_RICE = 2.5             # rice boiled/steamed (grain, or ground into a batter that's steamed/griddled)
+Y_MILLET = 2.5           # millets/broken wheat/whole wheat cooked like rice (boiled porridge, upma-style)
+Y_SEMOLINA = 2.5         # semolina/rava cooked in water
+Y_DAL_BOILED = 2.3       # split dal boiled directly in liquid (not batter)
+Y_LEGUME_WHOLE = 2.5     # whole legumes boiled (urad whole, rajma, chickpeas, lentils, moth bean)
+Y_BATTER = 1.5           # dal/besan ground into a wet batter, steamed or pan-fried (dosa/idli/dhokla/cheela)
+Y_DOUGH = 1.35           # wheat-flour dough cooked on tawa or fried (chapati/roti/naan/paratha/poori/tahlipeeth)
+Y_RICE_FLOUR_DOUGH = 1.8  # flour reconstituted into a firm dough/pressed steamed shape (stringhoppers, pittu/puttu)
+Y_CHICKEN = 0.75         # raw chicken loses ~25% mass (moisture) when cooked
+Y_NONE = 1.0             # no meaningful mass change: fats, dairy, nuts, sugars, vegetables, spices, eggs, paneer
+
+# Per-100g nutrient values for RAW ingredients (unchanged from Phase 4).
 # IFCT-sourced values cite the IFCT 2017 food code (e.g. "A015").
 # Non-IFCT values (chicken avg, butter, ghee, cream, yogurt, honey, oil) are
 # cited as "published" -- see decomposition notes for exact source/values.
@@ -70,7 +89,7 @@ INGREDIENTS = {
     # animal products
     "paneer":             {"source": "IFCT L003 Paneer",                      "fiber_g": 0.0,   "fat_g": 24.78, "protein_g": 18.86, "carbs_g": 2.41, "sugar_g": 2.41},
     "egg":                {"source": "IFCT M001 Egg, poultry, whole, raw",    "fiber_g": 0.0,   "fat_g": 9.15,  "protein_g": 13.28, "carbs_g": 0.0,   "sugar_g": 0.0},
-    "chicken":             {"source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless)", "fiber_g": 0.0, "fat_g": 12.42, "protein_g": 19.21, "carbs_g": 0.0, "sugar_g": 0.0},
+    "chicken":             {"source": "IFCT N001-N004 average (Chicken, poultry, leg/thigh/breast/wing, skinless, RAW)", "fiber_g": 0.0, "fat_g": 12.42, "protein_g": 19.21, "carbs_g": 0.0, "sugar_g": 0.0},
 
     # not in IFCT with sufficient detail -- published (USDA FoodData Central
     # typical values, retrieved 2026-08-13, see decomposition notes)
@@ -85,7 +104,9 @@ INGREDIENTS = {
     "coconut_chutney":     {"source": "approximated as fresh coconut (chutney's dominant ingredient by mass; onion/chili/lime treated as negligible)", "fiber_g": 10.42, "fat_g": 41.38, "protein_g": 3.84, "carbs_g": 6.30, "sugar_g": 6.20},
 }
 
-# grams per common measure -- see decomposition notes for rationale.
+# grams per common measure -- see decomposition notes for rationale. These
+# are RAW/dry measures; the yield_factor on each ingredient line converts to
+# cooked mass.
 G = {
     "cup_rice": 190, "cup_millet": 190, "cup_dal": 200, "cup_flour": 120,
     "cup_semolina": 165, "cup_bulgur": 170, "cup_coconut": 80, "cup_onion": 150,
@@ -97,261 +118,271 @@ G = {
 
 
 def _weighted(parts):
-    """parts: list of (ingredient_key, grams). Returns per-100g nutrient dict."""
-    total_g = sum(g for _, g in parts)
-    out = {}
+    """parts: list of (ingredient_key, raw_grams, note, yield_factor).
+    Returns (cooked_basis_nutrients, raw_basis_nutrients, total_raw_g, total_cooked_g).
+    Nutrient content per ingredient is fixed by its raw mass (cooking doesn't
+    destroy macros); only the mass denominator changes per ingredient via its
+    yield_factor.
+    """
+    total_raw_g = sum(g for _, g, _, _ in parts)
+    total_cooked_g = sum(g * y for _, g, _, y in parts)
+    cooked, raw = {}, {}
     for key in NUTRIENT_KEYS:
-        out[key] = round(sum(INGREDIENTS[ing][key] * g for ing, g in parts) / total_g, 2)
-    return out, total_g
+        nutrient_total = sum(INGREDIENTS[ing][key] * g / 100 for ing, g, _, _ in parts) * 100
+        raw[key] = round(nutrient_total / total_raw_g, 2)
+        cooked[key] = round(nutrient_total / total_cooked_g, 2)
+    return cooked, raw, total_raw_g, total_cooked_g
 
 
-# Composite dishes: food_name -> list of (ingredient_key, grams, note)
+# Composite dishes: food_name -> list of (ingredient_key, raw_grams, note, yield_factor)
 DISHES = {
     "Rice dosa": [
-        ("rice_milled", 3 * G["cup_rice"], "3 cups rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
+        ("rice_milled", 3 * G["cup_rice"], "3 cups rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
     ],
     "Dosa, rice and black gram dhal": [
-        ("rice_milled", 3 * G["cup_rice"], "3 cups rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
+        ("rice_milled", 3 * G["cup_rice"], "3 cups rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
     ],
     "Dosai (parboiled and raw rice), with chutney": [
-        ("rice_milled", 3 * G["cup_rice"], "3 cups rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
-        ("coconut_chutney", 18, "chutney side, ~18g"),
+        ("rice_milled", 3 * G["cup_rice"], "3 cups rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
+        ("coconut_chutney", 18, "chutney side, ~18g", Y_NONE),
     ],
     "Dosa, foxtail millet and black gram dhal": [
-        ("foxtail_millet", 3 * G["cup_millet"], "3 cups foxtail millet"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
+        ("foxtail_millet", 3 * G["cup_millet"], "3 cups foxtail millet", Y_MILLET),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
     ],
     "Rice idli (commercial dry mix)": [
-        ("rice_milled", 4 * G["cup_rice"], "4 cups rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
+        ("rice_milled", 4 * G["cup_rice"], "4 cups rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
     ],
     "Idli, brown, parboiled rice and black gram dhal, with sambar": [
-        ("rice_parboiled", 4 * G["cup_rice"], "4 cups parboiled rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
-        ("toor_dal", 15, "sambar dal, dry-equivalent ~15g"),
-        ("tomato", 10, "sambar vegetable, ~10g tomato-equivalent"),
+        ("rice_parboiled", 4 * G["cup_rice"], "4 cups parboiled rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
+        ("toor_dal", 15, "sambar dal, dry-equivalent ~15g, boiled in sambar (not batter)", Y_DAL_BOILED),
+        ("tomato", 10, "sambar vegetable, ~10g tomato-equivalent", Y_NONE),
     ],
     "Idli (parboiled and raw rice, black dhal), with chutney": [
-        ("rice_parboiled", 4 * G["cup_rice"], "4 cups parboiled rice"),
-        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal"),
-        ("coconut_chutney", 18, "chutney side, ~18g"),
+        ("rice_parboiled", 4 * G["cup_rice"], "4 cups parboiled rice", Y_RICE),
+        ("urad_dal", 1 * G["cup_dal"], "1 cup urad dal", Y_BATTER),
+        ("coconut_chutney", 18, "chutney side, ~18g", Y_NONE),
     ],
     "Upma": [
-        ("semolina", 1 * G["cup_semolina"], "1 cup semolina/rava"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
+        ("semolina", 1 * G["cup_semolina"], "1 cup semolina/rava", Y_SEMOLINA),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
     ],
     "Finger millet upma": [
-        ("ragi", 1 * G["cup_flour"], "1 cup ragi flour"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
+        ("ragi", 1 * G["cup_flour"], "1 cup ragi flour", Y_MILLET),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
     ],
     "Finger millet flakes upma": [
-        ("ragi", 1 * G["cup_flour"], "1 cup ragi flakes (flour composition used, see notes)"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
+        ("ragi", 1 * G["cup_flour"], "1 cup ragi flakes (flour composition used, see notes)", Y_MILLET),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
     ],
     "Finger millet vermicelli upma": [
-        ("ragi", 1 * G["cup_flour"], "1 cup ragi vermicelli (flour composition used, see notes)"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
+        ("ragi", 1 * G["cup_flour"], "1 cup ragi vermicelli (flour composition used, see notes)", Y_MILLET),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
     ],
     "Broken wheat upma, with green gram, chutney": [
-        ("wheat_bulgur", 1 * G["cup_bulgur"], "1 cup broken wheat/daliya"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
-        ("moong_dal", G["cup_bulgur"] / 4, "green gram, ~1:4 ratio to grain"),
-        ("coconut_chutney", 18, "chutney side, ~18g"),
+        ("wheat_bulgur", 1 * G["cup_bulgur"], "1 cup broken wheat/daliya", Y_MILLET),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("moong_dal", G["cup_bulgur"] / 4, "green gram, ~1:4 ratio to grain, boiled into the upma", Y_DAL_BOILED),
+        ("coconut_chutney", 18, "chutney side, ~18g", Y_NONE),
     ],
     "Upittu, roasted semolina and onions": [
-        ("semolina", 1 * G["cup_semolina"], "1 cup semolina/rava"),
-        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee"),
-        ("onion", G["medium_onion"], "1 medium onion"),
-        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering"),
-        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering"),
+        ("semolina", 1 * G["cup_semolina"], "1 cup semolina/rava", Y_SEMOLINA),
+        ("ghee", 2 * G["tbsp_fat"], "2 tbsp oil/ghee", Y_NONE),
+        ("onion", G["medium_onion"], "1 medium onion", Y_NONE),
+        ("urad_dal", 1 * G["tsp_dal"], "1 tsp urad dal tempering (fried briefly, not boiled)", Y_NONE),
+        ("bengal_gram_dal", 1 * G["tsp_dal"], "1 tsp chana dal tempering (fried briefly, not boiled)", Y_NONE),
     ],
     "Dhokla, chickpea and wheat semolina": [
-        ("bengal_gram_dal", 1.5 * G["cup_flour"], "1.5 cups besan"),
-        ("yogurt", 0.75 * G["cup_yogurt"], "0.75 cup yogurt"),
-        ("semolina", 2 * (G["cup_semolina"] / 48), "2 tsp semolina"),
+        ("bengal_gram_dal", 1.5 * G["cup_flour"], "1.5 cups besan, batter, steamed", Y_BATTER),
+        ("yogurt", 0.75 * G["cup_yogurt"], "0.75 cup yogurt", Y_NONE),
+        ("semolina", 2 * (G["cup_semolina"] / 48), "2 tsp semolina", Y_SEMOLINA),
     ],
     "Dhokla, parboiled rice, Bengal gram, green gram, with chutney": [
-        ("rice_parboiled", 1 * G["cup_rice"], "1 cup parboiled rice"),
-        ("bengal_gram_dal", 1 * G["cup_dal"], "1 cup Bengal gram dal"),
-        ("moong_dal", 1 * G["cup_dal"], "1 cup green gram dal"),
-        ("coconut_chutney", 18, "chutney side, ~18g"),
+        ("rice_parboiled", 1 * G["cup_rice"], "1 cup parboiled rice, ground batter, steamed", Y_RICE),
+        ("bengal_gram_dal", 1 * G["cup_dal"], "1 cup Bengal gram dal, ground batter, steamed", Y_BATTER),
+        ("moong_dal", 1 * G["cup_dal"], "1 cup green gram dal, ground batter, steamed", Y_BATTER),
+        ("coconut_chutney", 18, "chutney side, ~18g", Y_NONE),
     ],
     "Poha, rice flakes with ground nuts": [
-        ("rice_flakes", 1 * G["cup_poha"], "1 cup poha"),
-        ("groundnut", 3 * G["tbsp_peanut"], "3 tbsp peanuts"),
-        ("veg_oil", 1 * G["tbsp_fat"], "1 tbsp oil"),
+        ("rice_flakes", 1 * G["cup_poha"], "1 cup poha (already-parboiled/flaked, briefly rehydrated -- see notes)", Y_NONE),
+        ("groundnut", 3 * G["tbsp_peanut"], "3 tbsp peanuts", Y_NONE),
+        ("veg_oil", 1 * G["tbsp_fat"], "1 tbsp oil", Y_NONE),
     ],
     "Pongal, rice and roasted green gram dhal": [
-        ("rice_milled", 1.5 * G["cup_rice"], "1.5 cups rice"),
-        ("moong_dal", 1 * G["cup_dal"], "1 cup moong dal"),
-        ("ghee", 2.5 * G["tbsp_fat"], "2.5 tbsp ghee"),
+        ("rice_milled", 1.5 * G["cup_rice"], "1.5 cups rice, boiled", Y_RICE),
+        ("moong_dal", 1 * G["cup_dal"], "1 cup moong dal, boiled with the rice", Y_DAL_BOILED),
+        ("ghee", 2.5 * G["tbsp_fat"], "2.5 tbsp ghee", Y_NONE),
     ],
-    "Cheela, bengal gram": [("bengal_gram_dal", 100, "100% besan basis")],
-    "Cheela, bengal gram, fermented batter": [("bengal_gram_dal", 100, "100% besan basis, fermented (macros unchanged)")],
-    "Cheela, green gram": [("moong_dal", 100, "100% ground moong basis")],
-    "Cheela, green gram, fermented batter": [("moong_dal", 100, "100% ground moong basis, fermented (macros unchanged)")],
+    "Cheela, bengal gram": [("bengal_gram_dal", 100, "100% besan basis, batter, pan-fried", Y_BATTER)],
+    "Cheela, bengal gram, fermented batter": [("bengal_gram_dal", 100, "100% besan basis, fermented batter, pan-fried (macros unaffected by fermentation)", Y_BATTER)],
+    "Cheela, green gram": [("moong_dal", 100, "100% ground moong basis, batter, pan-fried", Y_BATTER)],
+    "Cheela, green gram, fermented batter": [("moong_dal", 100, "100% ground moong basis, fermented batter, pan-fried (macros unaffected by fermentation)", Y_BATTER)],
     "Poori, deep-fried wheat dough, with potato palya": [
-        ("wheat_flour_atta", 1 * G["cup_flour"], "1 cup wheat flour"),
-        ("veg_oil", 2 * G["tsp_fat"], "2 tsp oil in dough (see notes: excludes frying absorption)"),
-        ("potato", 100, "potato palya side, ~100g"),
+        ("wheat_flour_atta", 1 * G["cup_flour"], "1 cup wheat flour, dough, deep-fried", Y_DOUGH),
+        ("veg_oil", 2 * G["tsp_fat"], "2 tsp oil in dough (see notes: excludes frying absorption)", Y_NONE),
+        ("potato", 100, "potato palya side, ~100g", Y_NONE),
     ],
     "Laddu (popped amaranth, foxtail millet, legume, fenugreek)": [
-        ("amaranth_seed", 40, "popped amaranth, ~40g"),
-        ("foxtail_millet", 40, "popped foxtail millet, ~40g"),
-        ("bengal_gram_dal", 15, "besan, ~15g"),
-        ("fenugreek_seeds", 5, "fenugreek, ~5g"),
-        ("jaggery", 33.3, "jaggery, ~25% of total weight"),
+        ("amaranth_seed", 40, "popped amaranth, ~40g (dry-heat puffing, not water-cooked -- see notes)", Y_NONE),
+        ("foxtail_millet", 40, "popped foxtail millet, ~40g (dry-heat puffing, not water-cooked -- see notes)", Y_NONE),
+        ("bengal_gram_dal", 15, "besan, ~15g, dry-roasted not batter-cooked", Y_NONE),
+        ("fenugreek_seeds", 5, "fenugreek, ~5g", Y_NONE),
+        ("jaggery", 33.3, "jaggery, ~25% of total weight", Y_NONE),
     ],
     "Parantha, radish, wheat/mothbean/Bengal gram, with curd": [
-        ("wheat_flour_atta", 3 * G["cup_flour"], "3 cups wheat flour"),
-        ("moth_bean", 0.5 * G["cup_flour"], "0.5 cup mothbean flour"),
-        ("bengal_gram_dal", 0.5 * G["cup_flour"], "0.5 cup Bengal gram flour"),
-        ("radish", 100, "radish filling, ~100g"),
-        ("yogurt", 2.5 * 15, "curd side, ~2.5 tbsp"),
+        ("wheat_flour_atta", 3 * G["cup_flour"], "3 cups wheat flour, dough, cooked on tawa", Y_DOUGH),
+        ("moth_bean", 0.5 * G["cup_flour"], "0.5 cup mothbean flour, mixed into the same dough", Y_DOUGH),
+        ("bengal_gram_dal", 0.5 * G["cup_flour"], "0.5 cup Bengal gram flour, mixed into the same dough", Y_DOUGH),
+        ("radish", 100, "radish filling, ~100g", Y_NONE),
+        ("yogurt", 2.5 * 15, "curd side, ~2.5 tbsp", Y_NONE),
     ],
     "Tahlipeeth, wheat/bengal gram/green gram, with chutney": [
-        ("wheat_flour_atta", 3 * G["cup_flour"], "3 cups wheat flour"),
-        ("bengal_gram_dal", 0.5 * G["cup_flour"], "0.5 cup Bengal gram flour"),
-        ("moong_dal", 0.5 * G["cup_flour"], "0.5 cup green gram flour"),
-        ("coconut_chutney", 18, "chutney side, ~18g"),
+        ("wheat_flour_atta", 3 * G["cup_flour"], "3 cups wheat flour, dough, cooked on tawa", Y_DOUGH),
+        ("bengal_gram_dal", 0.5 * G["cup_flour"], "0.5 cup Bengal gram flour, mixed into the same dough", Y_DOUGH),
+        ("moong_dal", 0.5 * G["cup_flour"], "0.5 cup green gram flour, mixed into the same dough", Y_DOUGH),
+        ("coconut_chutney", 18, "chutney side, ~18g", Y_NONE),
     ],
     "Stringhoppers, red rice flour, with sambol/egg/gravy": [
-        ("rice_milled", 150, "rice flour dough, ~150g dry-equivalent"),
-        ("coconut_chutney", 30, "coconut sambol, ~30g"),
-        ("egg", G["egg"], "1 egg"),
-        ("coconut_chutney", 25, "coconut gravy, ~50ml treated as 25g coconut-equivalent"),
+        ("rice_milled", 150, "rice flour dough, ~150g dry-equivalent, pressed/steamed shape", Y_RICE_FLOUR_DOUGH),
+        ("coconut_chutney", 30, "coconut sambol, ~30g", Y_NONE),
+        ("egg", G["egg"], "1 egg", Y_NONE),
+        ("coconut_chutney", 25, "coconut gravy, ~50ml treated as 25g coconut-equivalent", Y_NONE),
     ],
     "Puttu/Pittu, industrially-milled finger millet flour": [
-        ("ragi", 2 * G["cup_flour"], "2 cups finger millet flour"),
-        ("coconut_fresh", 1 * G["cup_coconut"], "1 cup grated coconut"),
+        ("ragi", 2 * G["cup_flour"], "2 cups finger millet flour, layered/pressed, steamed", Y_RICE_FLOUR_DOUGH),
+        ("coconut_fresh", 1 * G["cup_coconut"], "1 cup grated coconut, used raw", Y_NONE),
     ],
     "Puttu/Pittu, stone-ground finger millet flour": [
-        ("ragi", 2 * G["cup_flour"], "2 cups finger millet flour"),
-        ("coconut_fresh", 1 * G["cup_coconut"], "1 cup grated coconut"),
+        ("ragi", 2 * G["cup_flour"], "2 cups finger millet flour, layered/pressed, steamed", Y_RICE_FLOUR_DOUGH),
+        ("coconut_fresh", 1 * G["cup_coconut"], "1 cup grated coconut, used raw", Y_NONE),
     ],
     "Basmati rice (microwave), with coconut sambol - Pakistan": [
-        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent"),
-        ("coconut_chutney", 25, "coconut sambol, ~25g"),
+        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent, cooked", Y_RICE),
+        ("coconut_chutney", 25, "coconut sambol, ~25g", Y_NONE),
     ],
     "Basmati rice (microwave), with coconut sambol - India": [
-        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent"),
-        ("coconut_chutney", 25, "coconut sambol, ~25g"),
+        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent, cooked", Y_RICE),
+        ("coconut_chutney", 25, "coconut sambol, ~25g", Y_NONE),
     ],
     "Basmati rice (rice cooker), with coconut sambal": [
-        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent"),
-        ("coconut_chutney", 25, "coconut sambol, ~25g"),
+        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent, cooked", Y_RICE),
+        ("coconut_chutney", 25, "coconut sambol, ~25g", Y_NONE),
     ],
     "Basmati rice (rice cooker), with coconut sambol": [
-        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent"),
-        ("coconut_chutney", 25, "coconut sambol, ~25g"),
+        ("rice_milled", 175, "basmati rice, ~175g dry-equivalent, cooked", Y_RICE),
+        ("coconut_chutney", 25, "coconut sambol, ~25g", Y_NONE),
     ],
     "Butter chicken": [
-        ("chicken", 400, "400g chicken"),
-        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade"),
-        ("tomato", 0.75 * G["cup_tomato"], "0.75 cup tomato puree"),
-        ("butter", 3 * G["tbsp_fat"], "3 tbsp butter"),
-        ("cream", 3 * 15, "3 tbsp cream"),
-        ("honey", 1.5 * G["tbsp_honey"], "1.5 tbsp honey/sugar"),
+        ("chicken", 400, "400g chicken, cooked (raw-chicken source, see notes)", Y_CHICKEN),
+        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade", Y_NONE),
+        ("tomato", 0.75 * G["cup_tomato"], "0.75 cup tomato puree", Y_NONE),
+        ("butter", 3 * G["tbsp_fat"], "3 tbsp butter", Y_NONE),
+        ("cream", 3 * 15, "3 tbsp cream", Y_NONE),
+        ("honey", 1.5 * G["tbsp_honey"], "1.5 tbsp honey/sugar", Y_NONE),
     ],
     "Tandoori chicken": [
-        ("chicken", 400, "400g chicken"),
-        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade"),
+        ("chicken", 400, "400g chicken, cooked (raw-chicken source, see notes)", Y_CHICKEN),
+        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade", Y_NONE),
     ],
     "Chicken tikka masala": [
-        ("chicken", 400, "400g chicken"),
-        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade"),
-        ("tomato", 0.75 * G["cup_tomato"], "0.75 cup tomato puree"),
-        ("butter", 3 * G["tbsp_fat"], "3 tbsp butter"),
-        ("cream", 3 * 15, "3 tbsp cream"),
-        ("honey", 1.5 * G["tbsp_honey"], "1.5 tbsp honey/sugar"),
+        ("chicken", 400, "400g chicken, cooked (raw-chicken source, see notes)", Y_CHICKEN),
+        ("yogurt", 0.5 * G["cup_yogurt"], "0.5 cup yogurt marinade", Y_NONE),
+        ("tomato", 0.75 * G["cup_tomato"], "0.75 cup tomato puree", Y_NONE),
+        ("butter", 3 * G["tbsp_fat"], "3 tbsp butter", Y_NONE),
+        ("cream", 3 * 15, "3 tbsp cream", Y_NONE),
+        ("honey", 1.5 * G["tbsp_honey"], "1.5 tbsp honey/sugar", Y_NONE),
     ],
     "Chicken curry (generic)": [
-        ("chicken", 400, "400g chicken"),
-        ("onion", 1 * G["cup_onion"], "1 cup chopped onion"),
-        ("tomato", 1 * G["cup_tomato"], "1 cup chopped tomato"),
-        ("veg_oil", 2.5 * G["tbsp_fat"], "2.5 tbsp oil"),
+        ("chicken", 400, "400g chicken, cooked (raw-chicken source, see notes)", Y_CHICKEN),
+        ("onion", 1 * G["cup_onion"], "1 cup chopped onion", Y_NONE),
+        ("tomato", 1 * G["cup_tomato"], "1 cup chopped tomato", Y_NONE),
+        ("veg_oil", 2.5 * G["tbsp_fat"], "2.5 tbsp oil", Y_NONE),
     ],
     "Butter paneer (paneer makhani)": [
-        ("paneer", 400, "400g paneer"),
-        ("butter", 4 * G["tbsp_fat"], "0.25 cup butter"),
-        ("tomato", 2 * G["cup_tomato"], "2 cups tomato puree"),
-        ("cream", 1 * G["cup_cream"], "1 cup cream"),
-        ("honey", 2 * G["tbsp_honey"], "2 tbsp sugar/honey"),
+        ("paneer", 400, "400g paneer (already ready-to-eat form, see notes -- no correction)", Y_NONE),
+        ("butter", 4 * G["tbsp_fat"], "0.25 cup butter", Y_NONE),
+        ("tomato", 2 * G["cup_tomato"], "2 cups tomato puree", Y_NONE),
+        ("cream", 1 * G["cup_cream"], "1 cup cream", Y_NONE),
+        ("honey", 2 * G["tbsp_honey"], "2 tbsp sugar/honey", Y_NONE),
     ],
     "Palak paneer": [
-        ("paneer", 300, "300g paneer"),
-        ("spinach", 500, "~500g spinach"),
-        ("cream", 2 * 15, "2 tbsp cream"),
-        ("onion", 80, "1 small onion"),
+        ("paneer", 300, "300g paneer (already ready-to-eat form, see notes -- no correction)", Y_NONE),
+        ("spinach", 500, "~500g spinach", Y_NONE),
+        ("cream", 2 * 15, "2 tbsp cream", Y_NONE),
+        ("onion", 80, "1 small onion", Y_NONE),
     ],
     "Dal makhani": [
-        ("urad_whole", 4 * G["cup_dal"], "4 cups whole urad dal"),
-        ("rajmah_red", 1 * G["cup_dal"], "1 cup rajma"),
-        ("butter", 2.5 * G["tbsp_fat"], "2.5 tbsp butter"),
-        ("cream", 0.5 * G["cup_cream"], "0.5 cup cream"),
-        ("onion", 75, "onion, ~0.5 cup"),
-        ("tomato", 90, "tomato, ~0.5 cup"),
+        ("urad_whole", 4 * G["cup_dal"], "4 cups whole urad dal, boiled", Y_LEGUME_WHOLE),
+        ("rajmah_red", 1 * G["cup_dal"], "1 cup rajma, boiled", Y_LEGUME_WHOLE),
+        ("butter", 2.5 * G["tbsp_fat"], "2.5 tbsp butter", Y_NONE),
+        ("cream", 0.5 * G["cup_cream"], "0.5 cup cream", Y_NONE),
+        ("onion", 75, "onion, ~0.5 cup", Y_NONE),
+        ("tomato", 90, "tomato, ~0.5 cup", Y_NONE),
     ],
     "Chana masala": [
-        ("bengal_gram_whole", 1 * G["cup_dal"], "1 cup chickpeas"),
-        ("ghee", 3 * G["tbsp_fat"], "3 tbsp ghee"),
-        ("potato", 2 * G["medium_potato"], "2 medium potatoes"),
-        ("onion", 2 * G["medium_onion"], "2 medium onions"),
-        ("tomato", 4 * G["medium_tomato"], "4 medium tomatoes"),
+        ("bengal_gram_whole", 1 * G["cup_dal"], "1 cup chickpeas, boiled", Y_LEGUME_WHOLE),
+        ("ghee", 3 * G["tbsp_fat"], "3 tbsp ghee", Y_NONE),
+        ("potato", 2 * G["medium_potato"], "2 medium potatoes", Y_NONE),
+        ("onion", 2 * G["medium_onion"], "2 medium onions", Y_NONE),
+        ("tomato", 4 * G["medium_tomato"], "4 medium tomatoes", Y_NONE),
     ],
 }
 
-# Direct-lookup foods: food_name -> ingredient_key (nutrient values copied as-is)
+# Direct-lookup foods: food_name -> (ingredient_key, yield_factor)
 DIRECT = {
-    "Basmati rice pilau, with onion and curry powder": "rice_milled",
-    "Chapatti (Elephant Atta Medium flour)": "wheat_flour_atta",
-    "Chapatti": "wheat_flour_atta",
-    "Chapati, flatbread": "wheat_flour_atta",
-    "Naan bread": "wheat_flour_refined",
-    "Paratha, frozen, heated in dry pan": "wheat_flour_atta",
-    "Pilaf porridge, whole grain": "rice_brown",
-    "Basmati rice, white, polished, cooked 10 min": "rice_milled",
-    "Basmati rice (Dreamrice)": "rice_milled",
-    "Basmati rice, white, boiled (Mahatma)": "rice_milled",
-    "Basmati rice, white, boiled (SunRice)": "rice_milled",
-    "Basmati rice (Laila)": "rice_milled",
-    "Chickpeas, canned, drained": "bengal_gram_whole",
-    "Chickpeas (Garbanzo beans, Bengal gram), canned": "bengal_gram_whole",
-    "Lentils, brown, canned, drained": "lentil_brown",
-    "Unpolished little millet, plain cooked": "little_millet",
-    "Unpolished foxtail millet, plain cooked": "foxtail_millet",
-    "Finger millet extruded snack": "ragi",
-    "Chapatti, wheat flour, thin, with green gram dhal": "wheat_flour_atta",
-    "Lentils, Mothbean, sprouted, cooked in buttermilk": "moth_bean",
-    "Porridge, scoured wheat, with gram mix": "wheat_whole",
-    "Porridge, decorticated finger millet, with gram mix": "ragi",
-    "Rajmah (kidney beans), boiled": "rajmah_red",
-    "Roti (unleavened flatbread), whole wheat flour": "wheat_flour_atta",
+    "Basmati rice pilau, with onion and curry powder": ("rice_milled", Y_RICE),
+    "Chapatti (Elephant Atta Medium flour)": ("wheat_flour_atta", Y_DOUGH),
+    "Chapatti": ("wheat_flour_atta", Y_DOUGH),
+    "Chapati, flatbread": ("wheat_flour_atta", Y_DOUGH),
+    "Naan bread": ("wheat_flour_refined", Y_DOUGH),
+    "Paratha, frozen, heated in dry pan": ("wheat_flour_atta", Y_DOUGH),
+    "Pilaf porridge, whole grain": ("rice_brown", Y_RICE),
+    "Basmati rice, white, polished, cooked 10 min": ("rice_milled", Y_RICE),
+    "Basmati rice (Dreamrice)": ("rice_milled", Y_RICE),
+    "Basmati rice, white, boiled (Mahatma)": ("rice_milled", Y_RICE),
+    "Basmati rice, white, boiled (SunRice)": ("rice_milled", Y_RICE),
+    "Basmati rice (Laila)": ("rice_milled", Y_RICE),
+    "Chickpeas, canned, drained": ("bengal_gram_whole", Y_LEGUME_WHOLE),
+    "Chickpeas (Garbanzo beans, Bengal gram), canned": ("bengal_gram_whole", Y_LEGUME_WHOLE),
+    "Lentils, brown, canned, drained": ("lentil_brown", Y_LEGUME_WHOLE),
+    "Unpolished little millet, plain cooked": ("little_millet", Y_MILLET),
+    "Unpolished foxtail millet, plain cooked": ("foxtail_millet", Y_MILLET),
+    # Manufactured/extruded snack, not home-boiled -- none of the wet-cooking
+    # yield categories apply; left on a raw-ingredient basis, documented.
+    "Finger millet extruded snack": ("ragi", Y_NONE),
+    "Chapatti, wheat flour, thin, with green gram dhal": ("wheat_flour_atta", Y_DOUGH),
+    "Lentils, Mothbean, sprouted, cooked in buttermilk": ("moth_bean", Y_LEGUME_WHOLE),
+    "Porridge, scoured wheat, with gram mix": ("wheat_whole", Y_MILLET),
+    "Porridge, decorticated finger millet, with gram mix": ("ragi", Y_MILLET),
+    "Rajmah (kidney beans), boiled": ("rajmah_red", Y_LEGUME_WHOLE),
+    "Roti (unleavened flatbread), whole wheat flour": ("wheat_flour_atta", Y_DOUGH),
 }
 
 # Blends: proportions are stated directly in the food name, so no external
 # recipe sourcing was needed -- just a mass-weighted blend.
 BLENDS = {
     "Chapati, flatbread with 10% fenugreek": [
-        ("wheat_flour_atta", 90, "90% wheat flour"),
-        ("fenugreek_seeds", 10, "10% fenugreek (seeds used as dry-basis proxy, see notes)"),
+        ("wheat_flour_atta", 90, "90% wheat flour, dough, cooked on tawa", Y_DOUGH),
+        ("fenugreek_seeds", 10, "10% fenugreek (seeds used as dry-basis proxy, see notes)", Y_NONE),
     ],
     "Roti, 75% rice flour and 25% soy flour": [
-        ("rice_milled", 75, "75% rice flour"),
-        ("soybean", 25, "25% soy flour (whole soybean composition used, see notes)"),
+        ("rice_milled", 75, "75% rice flour, dough, cooked on tawa like other rotis (not a steamed rice-flour shape, see notes)", Y_DOUGH),
+        ("soybean", 25, "25% soy flour (whole soybean composition used, see notes), same dough", Y_DOUGH),
     ],
 }
 
@@ -371,19 +402,21 @@ def main():
     BREAKDOWN_DIR.mkdir(exist_ok=True)
     rows = []
 
-    for name, ingredient_key in DIRECT.items():
-        vals = INGREDIENTS[ingredient_key]
-        rows.append({"food_name": name, **{k: vals[k] for k in NUTRIENT_KEYS}})
+    for name, (ingredient_key, yield_factor) in DIRECT.items():
+        parts = [(ingredient_key, 100, "direct IFCT lookup", yield_factor)]
+        cooked, raw, total_raw_g, total_cooked_g = _weighted(parts)
+        rows.append({"food_name": name, **cooked})
+        _write_breakdown(name, parts, cooked, raw, total_raw_g, total_cooked_g)
 
     for name, parts in BLENDS.items():
-        vals, total_g = _weighted([(k, g) for k, g, _ in parts])
-        rows.append({"food_name": name, **vals})
-        _write_breakdown(name, parts, vals, total_g)
+        cooked, raw, total_raw_g, total_cooked_g = _weighted(parts)
+        rows.append({"food_name": name, **cooked})
+        _write_breakdown(name, parts, cooked, raw, total_raw_g, total_cooked_g)
 
     for name, parts in DISHES.items():
-        vals, total_g = _weighted([(k, g) for k, g, _ in parts])
-        rows.append({"food_name": name, **vals})
-        _write_breakdown(name, parts, vals, total_g)
+        cooked, raw, total_raw_g, total_cooked_g = _weighted(parts)
+        rows.append({"food_name": name, **cooked})
+        _write_breakdown(name, parts, cooked, raw, total_raw_g, total_cooked_g)
 
     rows.sort(key=lambda r: r["food_name"])
     out_path = RAW_DIR / "south_asian_nutrients.csv"
@@ -405,18 +438,31 @@ def _slug(name):
     return "-".join(keep.split())[:60]
 
 
-def _write_breakdown(name, parts, vals, total_g):
+def _write_breakdown(name, parts, cooked, raw, total_raw_g, total_cooked_g):
     data = {
         "food_name": name,
         "ingredients": [
-            {"ingredient": ing, "grams": round(g, 2), "note": note, "source": INGREDIENTS[ing]["source"]}
-            for ing, g, note in parts
+            {
+                "ingredient": ing,
+                "raw_grams": round(g, 2),
+                "yield_factor": y,
+                "cooked_grams": round(g * y, 2),
+                "note": note,
+                "source": INGREDIENTS[ing]["source"],
+            }
+            for ing, g, note, y in parts
         ],
-        "total_mix_grams": round(total_g, 2),
-        "per_100g_nutrients": vals,
-        "method": "mass-weighted average of ingredient per-100g nutrient values; "
-                  "per-100g output is scale-invariant so only ingredient mass ratios matter, "
-                  "not the absolute batch size shown here",
+        "total_raw_grams": round(total_raw_g, 2),
+        "total_cooked_grams": round(total_cooked_g, 2),
+        "per_100g_nutrients_cooked_basis": cooked,
+        "per_100g_nutrients_raw_basis_phase4_original": raw,
+        "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't "
+                  "destroy macros); each ingredient's raw mass is converted to an effective "
+                  "cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) "
+                  "before computing per-100g-of-cooked-dish nutrient density. "
+                  "per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what "
+                  "Phase 4 originally reported (yield_factor=1 for every ingredient) before this "
+                  "cooking-yield correction.",
     }
     path = BREAKDOWN_DIR / f"{_slug(name)}.json"
     with open(path, "w", encoding="utf-8") as f:

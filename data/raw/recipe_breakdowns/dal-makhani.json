@@ -3,48 +3,68 @@
   "ingredients": [
     {
       "ingredient": "urad_whole",
-      "grams": 800,
-      "note": "4 cups whole urad dal",
+      "raw_grams": 800,
+      "yield_factor": 2.5,
+      "cooked_grams": 2000.0,
+      "note": "4 cups whole urad dal, boiled",
       "source": "IFCT B004 Black gram, whole (whole urad)"
     },
     {
       "ingredient": "rajmah_red",
-      "grams": 200,
-      "note": "1 cup rajma",
+      "raw_grams": 200,
+      "yield_factor": 2.5,
+      "cooked_grams": 500.0,
+      "note": "1 cup rajma, boiled",
       "source": "IFCT B020 Rajmah, red (kidney beans)"
     },
     {
       "ingredient": "butter",
-      "grams": 35.0,
+      "raw_grams": 35.0,
+      "yield_factor": 1.0,
+      "cooked_grams": 35.0,
       "note": "2.5 tbsp butter",
       "source": "published (USDA FDC, salted butter)"
     },
     {
       "ingredient": "cream",
-      "grams": 120.0,
+      "raw_grams": 120.0,
+      "yield_factor": 1.0,
+      "cooked_grams": 120.0,
       "note": "0.5 cup cream",
       "source": "published (USDA FDC, heavy cream, ~36% fat)"
     },
     {
       "ingredient": "onion",
-      "grams": 75,
+      "raw_grams": 75,
+      "yield_factor": 1.0,
+      "cooked_grams": 75.0,
       "note": "onion, ~0.5 cup",
       "source": "IFCT G017 Onion, big"
     },
     {
       "ingredient": "tomato",
-      "grams": 90,
+      "raw_grams": 90,
+      "yield_factor": 1.0,
+      "cooked_grams": 90.0,
       "note": "tomato, ~0.5 cup",
       "source": "IFCT D076 Tomato, ripe, local"
     }
   ],
-  "total_mix_grams": 1320.0,
-  "per_100g_nutrients": {
+  "total_raw_grams": 1320.0,
+  "total_cooked_grams": 2820.0,
+  "per_100g_nutrients_cooked_basis": {
+    "fiber_g": 7.09,
+    "fat_g": 3.15,
+    "protein_g": 7.81,
+    "carbs_g": 16.39,
+    "sugar_g": 0.69
+  },
+  "per_100g_nutrients_raw_basis_phase4_original": {
     "fiber_g": 15.14,
     "fat_g": 6.72,
     "protein_g": 16.69,
     "carbs_g": 35.01,
     "sugar_g": 1.48
   },
-  "method": "mass-weighted average of ingredient per-100g nutrient values; per-100g output is scale-invariant so only ingredient mass ratios matter, not the absolute batch size shown here"
+  "method": "nutrient content per ingredient is fixed by its raw mass (cooking doesn't destroy macros); each ingredient's raw mass is converted to an effective cooked mass via its yield_factor (cooked_grams = raw_grams * yield_factor) before computing per-100g-of-cooked-dish nutrient density. per_100g_nutrients_raw_basis_phase4_original is kept for audit -- it's what Phase 4 originally reported (yield_factor=1 for every ingredient) before this cooking-yield correction."
 }
