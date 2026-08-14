@@ -21,6 +21,50 @@ GI_ZERO_EXCEPTION_DISHES = {
 # check, which is only meaningful for lab-sourced GI/GL values.
 DOCUMENTED_EXCEPTION_DISHES = GI_ZERO_EXCEPTION_DISHES | {"Dal makhani", "Chana masala"}
 
+# Atkinson et al. 2021's standardized carbohydrate portion per food
+# category, in grams. GL = GI/100 * category_carb_g -- this is what
+# Atkinson's recorded GL actually encodes, independent of any specific
+# food's nutrient density. See data/raw/south_asian_category_mapping.md.
+CATEGORY_STANDARD_CARB_G = {
+    "Cereal grains": 45,
+    "Legumes": 15,
+    "Breads": 15,
+    "Snack foods and confectionery": 25,
+    "Regional or traditional foods": 35,
+}
+
+# Per-food category assignment -- kept in sync with
+# data/raw/south_asian_category_mapping.md (which documents the rationale
+# for each one). Foods not listed in CEREAL_GRAINS/LEGUMES/BREADS/SNACKS
+# default to "Regional or traditional foods".
+CEREAL_GRAINS = {
+    "Basmati rice, white, polished, cooked 10 min",
+    "Basmati rice (Dreamrice)",
+    "Basmati rice, white, boiled (Mahatma)",
+    "Basmati rice, white, boiled (SunRice)",
+    "Basmati rice (Laila)",
+    "Unpolished little millet, plain cooked",
+    "Unpolished foxtail millet, plain cooked",
+    "Pilaf porridge, whole grain",
+}
+LEGUMES = {
+    "Chickpeas, canned, drained",
+    "Chickpeas (Garbanzo beans, Bengal gram), canned",
+    "Lentils, brown, canned, drained",
+    "Rajmah (kidney beans), boiled",
+    "Lentils, Mothbean, sprouted, cooked in buttermilk",
+}
+BREADS = {"Roti (unleavened flatbread), whole wheat flour"}
+SNACK_FOODS = {
+    "Finger millet extruded snack",
+    "Laddu (popped amaranth, foxtail millet, legume, fenugreek)",
+}
+
+# A plausible real-world serving weight range, wide enough not to false-flag
+# legitimate recipe/portion variation but tight enough to catch a
+# decomposition that's off by an order of magnitude.
+PLAUSIBLE_SERVING_G = (15, 600)
+
 GL_TOLERANCE = 0.30
 
 
@@ -84,37 +128,72 @@ def test_gi_zero_exception_dishes_are_low_carb():
         )
 
 
-def test_gl_sanity_check_against_atkinson_gl_flags_outliers():
-    """GL ~= GI * carbs_g / 100 as a rough sanity check against Phase 2's
-    recorded GL. This is expected to diverge for many south_asian dishes
-    because south_asian_nutrients.csv reports nutrients per 100g of the
-    RAW/DRY ingredient mix (see decomposition notes), while Atkinson's GL
-    was computed from an as-eaten (cooked, water-diluted) carb content --
-    so this test flags outliers via a warning rather than failing.
+def _category_of(name):
+    if name in CEREAL_GRAINS:
+        return "Cereal grains"
+    if name in LEGUMES:
+        return "Legumes"
+    if name in BREADS:
+        return "Breads"
+    if name in SNACK_FOODS:
+        return "Snack foods and confectionery"
+    return "Regional or traditional foods"
+
+
+def test_gl_implies_a_plausible_serving_weight():
+    """Atkinson et al. 2021 compute GL from a category-specific STANDARDIZED
+    carbohydrate portion, not from any particular food's actual nutrient
+    density: GL = GI/100 * category_standard_carb_g. So GL is mathematically
+    independent of our decomposed carbs_g, and directly comparing
+    GI*carbs_g/100 against GL (the original version of this check) produces
+    false positives whenever a food's standardized portion differs from
+    100g of carbs -- which is nearly always, since the portions range from
+    5g to 45g depending on category.
+
+    A methodologically sound check instead asks: given our decomposed
+    carbs_g (per 100g of cooked dish) and the food's category, what serving
+    weight would contain the category's standardized carb amount? That's
+    implied_weight_g = category_standard_carb_g / carbs_g_per_100g * 100.
+    This is a plausibility check, not an exact-match check -- Atkinson's
+    standardized portions are reference amounts for calculating GL, not a
+    guarantee that any specific recipe's real serving size matches them.
+
+    Also prints each food's implied serving weight next to its category's
+    standard carb portion, as groundwork for Phase 11's meal parser (which
+    will need typical serving-size assumptions to convert free-text meal
+    descriptions into gram quantities).
     """
     gi_gl = _south_asian_gi_gl()
     rows = {row["food_name"]: row for row in _nutrient_rows()}
-    flagged = []
+    lo, hi = PLAUSIBLE_SERVING_G
+    failures = []
     checked = 0
-    for name, row in rows.items():
+    info_lines = []
+    for name, row in sorted(rows.items()):
         if name in DOCUMENTED_EXCEPTION_DISHES:
             continue
         gi, gl = gi_gl[name]
-        if gl == 0:
-            continue
-        checked += 1
         carbs = float(row["carbs_g"])
-        calc_gl = gi * carbs / 100
-        ratio = calc_gl / gl
-        if not (1 - GL_TOLERANCE <= ratio <= 1 + GL_TOLERANCE):
-            flagged.append((name, gl, calc_gl, ratio))
+        category = _category_of(name)
+        standard_carb_g = CATEGORY_STANDARD_CARB_G[category]
+        assert carbs > 0, f"{name}: carbs_g must be > 0 to imply a serving weight"
+        checked += 1
+        implied_weight_g = standard_carb_g / carbs * 100
+        info_lines.append(
+            f"  {name} [{category}, {standard_carb_g}g standard carb]: "
+            f"implied serving = {implied_weight_g:.1f}g (carbs_g/100g={carbs:.2f}, GI={gi:.0f}, GL={gl:.1f})"
+        )
+        if not (lo <= implied_weight_g <= hi):
+            failures.append((name, category, implied_weight_g))
     assert checked > 0
-    if flagged:
-        lines = "\n".join(
-            f"  {name}: recorded GL={gl}, recomputed GL={calc_gl:.2f} (ratio={ratio:.2f})"
-            for name, gl, calc_gl, ratio in flagged
-        )
-        warnings.warn(
-            f"{len(flagged)}/{checked} south_asian dishes fall outside +/-{int(GL_TOLERANCE*100)}% "
-            f"GL sanity tolerance (see data/raw/south_asian_decomposition_notes.md for why):\n{lines}"
-        )
+    warnings.warn(
+        "Implied serving weight per south_asian dish (category standard carb "
+        f"portion / decomposed carbs_g), informational for Phase 11's meal "
+        f"parser:\n" + "\n".join(info_lines)
+    )
+    assert not failures, (
+        f"{len(failures)} south_asian dish(es) imply an implausible serving weight "
+        f"(outside {lo}-{hi}g) given their category's standardized carb portion -- "
+        "likely a genuine decomposition error, not just category-mapping uncertainty:\n"
+        + "\n".join(f"  {name} [{category}]: {w:.1f}g" for name, category, w in failures)
+    )

@@ -181,6 +181,69 @@ None of these were adjusted by changing the yield factors beyond what this
 fix specified, or by loosening the test's tolerance -- they're reported here
 as open questions for a future pass rather than resolved.
 
+**Superseded:** the specific check described above (`GL ~= GI * carbs_g /
+100`, tolerance +/-30%, "22 of 58 flagged") no longer exists in
+`tests/test_phase_04.py` -- see "GL sanity check methodology correction"
+below for why and what replaced it. This section is kept as-is for history;
+don't expect its numbers to match a current test run.
+
+## GL sanity check methodology correction
+
+The GL sanity check described above (`GL ~= GI * carbs_g / 100`) was itself
+methodologically flawed, independent of the raw-vs-cooked basis issue it was
+originally built to catch. Atkinson et al. 2021 don't compute GL from any
+particular food's actual nutrient density at all -- they use a **category-
+specific standardized carbohydrate portion**:
+
+```
+GL = GI / 100 * category_standardized_carb_g
+```
+
+where `category_standardized_carb_g` is a fixed reference amount (5g-45g
+depending on category -- nuts and sugars get 5g, cereal grains get 45g,
+etc.), not derived from any specific recipe's nutrient density. This means
+Atkinson's recorded GL is only a function of GI and food category -- it says
+nothing about how carb-dense a specific dish actually is per 100g, so
+comparing `GI * carbs_g / 100` against it (as the old check did) isn't a
+meaningful test. It produces false positives for any food whose category's
+standardized portion isn't close to 100g (i.e. almost every category, since
+only "Regional or traditional foods" at 35g comes anywhere near). This was
+confirmed against two source entries: "Roti (unleavened flatbread), whole
+wheat flour" is category "Breads" (15g standard carb) and its GL of 7
+reproduces exactly as `45 * 15 / 100 = 6.75 ~ 7`; "Chapatti" is category
+"Regional or traditional foods" (35g) and its GL of 20 reproduces exactly as
+`58 * 35 / 100 = 20.3 ~ 20`. Both are internally correct despite being
+similar flatbreads with very different GL -- they were just never
+comparable under the old check's flawed logic in the first place.
+
+**The fix:** `data/raw/south_asian_category_mapping.md` assigns each of the
+58 checkable south_asian foods (the 66 matched foods minus the 8
+non-Atkinson-sourced exceptions) to one of Atkinson's categories. The test
+(`tests/test_phase_04.py::test_gl_implies_a_plausible_serving_weight`) then
+computes, per food, the **implied serving weight** that would contain that
+category's standardized carb amount given our decomposed carbs_g:
+
+```
+implied_weight_g = category_standard_carb_g / carbs_g_per_100g * 100
+```
+
+and checks it falls within a plausible real-world serving range
+(15g-600g) -- a plausibility check, not an exact-match check, since
+Atkinson's standardized portions are reference amounts for calculating GL,
+not a guarantee that matches any specific recipe's real serving size. This
+correctly stops comparing incomparable numbers (GL vs. raw carb density)
+and instead checks something that actually should hold: a reasonably-sized
+plate of the food should contain roughly the category's reference carb
+amount. The test also warns with every food's implied weight next to its
+category and standard portion -- informational groundwork for Phase 11's
+meal parser, which will need typical serving-size assumptions to convert
+free-text meal descriptions into gram quantities.
+
+**Result:** all 58 checkable dishes pass (implied weights ranging 31.6g-
+171.6g, all realistic single-serving sizes). No south_asian_nutrients.csv or
+gi_gl_raw.csv values were touched by this fix -- only the test's comparison
+logic and this new category-mapping documentation.
+
 ### Notable proxy/mapping choices
 
 - **Foxtail millet**: IFCT food code A017 is labeled "Varagu (*Paspalum
