@@ -4,3 +4,4 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .env
+data/raw/IFCT2017.pdf
