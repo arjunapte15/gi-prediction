@@ -12,8 +12,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Stage site for deploy
+        # site/app.js fetches "../data/processed/foods.json" and
+        # "../parser/food_aliases.json", relative to the page's own URL.
+        # GitHub Pages serves this repo at .../gi-prediction/, so those
+        # ".." fetches need a real sibling data/ and parser/ directory one
+        # level above wherever the page lives -- which means the page
+        # itself must be published one level deeper than the publish root,
+        # with data/ and parser/ as its siblings (mirroring this repo's own
+        # layout, which is exactly what site/app.js already assumes locally).
+        # This build step only stages a transient copy for this workflow
+        # run; the committed site/ folder and the data/parser source files
+        # are untouched.
+        run: |
+          mkdir -p _deploy/site _deploy/data/processed _deploy/parser
+          cp -r site/. _deploy/site/
+          cp data/processed/foods.json _deploy/data/processed/foods.json
+          cp parser/food_aliases.json _deploy/parser/food_aliases.json
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          publish_dir: ./_deploy
