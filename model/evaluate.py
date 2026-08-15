@@ -48,24 +48,31 @@ OVERFITTING_GAP_THRESHOLD = 10.0
 MAE_SANITY_CEILING = 50.0
 
 
-def run_cross_validation(X, y, n_splits=N_SPLITS, random_state=RANDOM_STATE):
-    """Returns a list of per-fold MAE values, one per fold."""
+def run_cross_validation(X, y, model_factory=LinearRegression, n_splits=N_SPLITS, random_state=RANDOM_STATE):
+    """Returns a list of per-fold MAE values, one per fold.
+
+    model_factory is a zero-argument callable returning a fresh, unfitted
+    estimator (e.g. LinearRegression, or a lambda wrapping RidgeCV/LassoCV/
+    RandomForestRegressor with fixed hyperparameters) -- a new instance is
+    built for every fold so no fitted state leaks across folds. Reused as-is
+    by Phase 9's Ridge/Lasso/random forest comparison.
+    """
     kfold = KFold(n_splits=n_splits, shuffle=True, random_state=random_state)
     fold_maes = []
     for train_idx, test_idx in kfold.split(X):
         X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
         y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]
 
-        model = LinearRegression()
+        model = model_factory()
         model.fit(X_train, y_train)
         predictions = model.predict(X_test)
         fold_maes.append(mean_absolute_error(y_test, predictions))
     return fold_maes
 
 
-def compute_training_mae(X, y):
+def compute_training_mae(X, y, model_factory=LinearRegression):
     """In-sample MAE: fit on all of X/y, then score against the same rows."""
-    model = LinearRegression()
+    model = model_factory()
     model.fit(X, y)
     predictions = model.predict(X)
     return mean_absolute_error(y, predictions), model

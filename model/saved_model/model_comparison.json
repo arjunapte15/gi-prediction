@@ -1,0 +1,81 @@
+{
+  "ridge": {
+    "model": "ridge",
+    "fold_mae": [
+      13.049704460052606,
+      10.567794692931251,
+      11.97813081181701,
+      11.568071507491046,
+      15.314457316852872
+    ],
+    "mean_cv_mae": 12.495631757828956,
+    "training_mae": 11.745417443772856,
+    "overfitting_gap": 0.7502143140561,
+    "coefficients": {
+      "fiber_g": 0.6290518336646124,
+      "fat_g": -0.5054530299756639,
+      "protein_g": -1.9089717101019845,
+      "carbs_g": 0.4507057908670158
+    },
+    "intercept": 45.62174393600602,
+    "selected_alpha": 100.0,
+    "fiber_g_analysis": {
+      "value": 0.6290518336646124,
+      "sign": "positive",
+      "matches_baseline_sign": true,
+      "zeroed_out": false
+    }
+  },
+  "lasso": {
+    "model": "lasso",
+    "fold_mae": [
+      13.142817637623564,
+      10.454955636773118,
+      12.210672205685604,
+      11.621932125856391,
+      15.179008252653126
+    ],
+    "mean_cv_mae": 12.521877171718362,
+    "training_mae": 11.739954797264774,
+    "overfitting_gap": 0.7819223744535879,
+    "coefficients": {
+      "fiber_g": 0.7629404346437142,
+      "fat_g": -0.4896436394583122,
+      "protein_g": -2.0793876128135915,
+      "carbs_g": 0.44936718222639765
+    },
+    "intercept": 46.07643279625823,
+    "selected_alpha": 0.001,
+    "fiber_g_analysis": {
+      "value": 0.7629404346437142,
+      "sign": "positive",
+      "matches_baseline_sign": true,
+      "zeroed_out": false
+    }
+  },
+  "random_forest": {
+    "model": "random_forest",
+    "fold_mae": [
+      12.1291870411719,
+      9.044166290485203,
+      11.14553080062011,
+      10.850662448903096,
+      10.836955012834569
+    ],
+    "mean_cv_mae": 10.801300318802976,
+    "training_mae": 7.76135558529506,
+    "overfitting_gap": 3.039944733507916,
+    "feature_importances": {
+      "fiber_g": 0.08311587114471468,
+      "fat_g": 0.15459988795246157,
+      "protein_g": 0.14775875698141921,
+      "carbs_g": 0.6145254839214046
+    },
+    "feature_importances_sum": 1.0,
+    "fiber_g_analysis": {
+      "value": 0.08311587114471468,
+      "rank": 4,
+      "note": "random forest importances are non-negative by construction, not signed -- not directly comparable to a linear coefficient's sign."
+    }
+  }
+}
