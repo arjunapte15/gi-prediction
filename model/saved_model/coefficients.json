@@ -1,0 +1,20 @@
+{
+  "model_type": "ridge_regression",
+  "target": "GI",
+  "features": [
+    "fiber_g",
+    "fat_g",
+    "protein_g",
+    "carbs_g"
+  ],
+  "coefficients": {
+    "fiber_g": 0.6290518336646124,
+    "fat_g": -0.5054530299756639,
+    "protein_g": -1.9089717101019845,
+    "carbs_g": 0.4507057908670158
+  },
+  "intercept": 45.62174393600602,
+  "alpha": 100.0,
+  "n_samples": 129,
+  "prediction_formula": "GI \u2248 intercept + sum(coefficients[feature] * feature_value for feature in features)"
+}
