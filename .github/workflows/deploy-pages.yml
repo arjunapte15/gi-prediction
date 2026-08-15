@@ -21,14 +21,17 @@ jobs:
         # itself must be published one level deeper than the publish root,
         # with data/ and parser/ as its siblings (mirroring this repo's own
         # layout, which is exactly what site/app.js already assumes locally).
-        # This build step only stages a transient copy for this workflow
-        # run; the committed site/ folder and the data/parser source files
-        # are untouched.
+        # Phase 15 adds a third fetch, "../model/saved_model/coefficients.json",
+        # following the same convention -- so model/ needs staging as a
+        # sibling too. This build step only stages a transient copy for
+        # this workflow run; the committed site/ folder and the
+        # data/parser/model source files are untouched.
         run: |
-          mkdir -p _deploy/site _deploy/data/processed _deploy/parser
+          mkdir -p _deploy/site _deploy/data/processed _deploy/parser _deploy/model/saved_model
           cp -r site/. _deploy/site/
           cp data/processed/foods.json _deploy/data/processed/foods.json
           cp parser/food_aliases.json _deploy/parser/food_aliases.json
+          cp model/saved_model/coefficients.json _deploy/model/saved_model/coefficients.json
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3

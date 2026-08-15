@@ -104,6 +104,32 @@ button:disabled {
   color: #b3261e;
 }
 
+#prediction-summary {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+#prediction-breakdown {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+#prediction-breakdown li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+#prediction-breakdown li:last-child {
+  border-bottom: none;
+}
+
+#prediction-clarification {
+  color: #a86b00;
+}
+
 footer {
   color: var(--muted);
   font-size: 0.85rem;
