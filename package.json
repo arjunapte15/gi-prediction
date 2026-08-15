@@ -1,0 +1,12 @@
+{
+  "name": "gi-prediction",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site tests for the GI/GL meal predictor.",
+  "scripts": {
+    "test": "for f in tests/test_phase_*.js; do node \"$f\" || exit 1; done"
+  },
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

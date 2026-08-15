@@ -4,6 +4,7 @@ __pycache__/
 .pytest_cache/
 .DS_Store
 .env
+node_modules/
 data/raw/IFCT2017.pdf
 data/raw/atkinson21.pdf
 data/raw/atkinson_files/
