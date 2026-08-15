@@ -77,6 +77,33 @@ button:disabled {
   cursor: not-allowed;
 }
 
+#parse-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.parse-result {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.parse-result:last-child {
+  border-bottom: none;
+}
+
+.parse-result--matched {
+  color: var(--accent);
+}
+
+.parse-result--ambiguous {
+  color: #a86b00;
+}
+
+.parse-result--not_found {
+  color: #b3261e;
+}
+
 footer {
   color: var(--muted);
   font-size: 0.85rem;

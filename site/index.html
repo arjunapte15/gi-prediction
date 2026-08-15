@@ -15,8 +15,14 @@
   <main>
     <section id="meal-input" aria-labelledby="meal-input-heading">
       <h2 id="meal-input-heading">Describe your meal</h2>
-      <textarea id="meal-text" rows="3" placeholder="e.g. 2 rotis, dal, and a bowl of rice"></textarea>
+      <textarea id="meal-text" rows="3" placeholder="One food per line, e.g.&#10;Naan bread&#10;Dosa"></textarea>
       <button id="predict-button" type="button" disabled>Predict</button>
+    </section>
+
+    <section id="parse-output" aria-labelledby="parse-output-heading">
+      <h2 id="parse-output-heading">Matched foods</h2>
+      <p class="placeholder">Matched foods will appear here.</p>
+      <ul id="parse-results"></ul>
     </section>
 
     <section id="prediction-output" aria-labelledby="prediction-output-heading">
@@ -39,6 +45,7 @@
     <p id="data-status">Loading food data&hellip;</p>
   </footer>
 
+  <script src="parser.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

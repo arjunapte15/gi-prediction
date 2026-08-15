@@ -7,6 +7,7 @@
     "test": "for f in tests/test_phase_*.js; do node \"$f\" || exit 1; done"
   },
   "devDependencies": {
-    "jsdom": "^29.1.1"
+    "jsdom": "^29.1.1",
+    "playwright": "^1.62.1"
   }
 }
