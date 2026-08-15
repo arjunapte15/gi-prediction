@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GI Prediction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Meal GI/GL Predictor</h1>
+    <p class="subtitle">Estimate the glycemic index and glycemic load of a meal from a free-text description.</p>
+  </header>
+
+  <main>
+    <section id="meal-input" aria-labelledby="meal-input-heading">
+      <h2 id="meal-input-heading">Describe your meal</h2>
+      <textarea id="meal-text" rows="3" placeholder="e.g. 2 rotis, dal, and a bowl of rice"></textarea>
+      <button id="predict-button" type="button" disabled>Predict</button>
+    </section>
+
+    <section id="prediction-output" aria-labelledby="prediction-output-heading">
+      <h2 id="prediction-output-heading">Prediction</h2>
+      <p class="placeholder">Prediction results will appear here.</p>
+    </section>
+
+    <section id="explanation-output" aria-labelledby="explanation-output-heading">
+      <h2 id="explanation-output-heading">Explanation</h2>
+      <p class="placeholder">A breakdown of how the prediction was calculated will appear here.</p>
+    </section>
+
+    <section id="demographic-input" aria-labelledby="demographic-input-heading">
+      <h2 id="demographic-input-heading">About you (optional)</h2>
+      <p class="placeholder">Demographic inputs and personalized suggestions will appear here.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p id="data-status">Loading food data&hellip;</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
