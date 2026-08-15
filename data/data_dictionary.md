@@ -152,3 +152,26 @@ density legitimately implies a serving of only ~6-7g (roughly a teaspoon)
 now that both have category mappings, excluding the 9 documented
 non-Atkinson exception dishes (the 8 South Asian ones listed above, plus
 Dal makhani and Chana masala).
+
+## Known model exceptions (Phase 7+)
+
+**`fiber_g`'s coefficient in the Phase 7 baseline linear regression has an
+unexpected sign** (`+0.7631`, fit on all 129 rows against `GI`; expected
+`<= 0`, since more fiber is generally expected to lower glycemic response).
+Investigated in Phase 7's diagnostic, not fixed by altering the model:
+univariate `Pearson r(fiber_g, GI) = +0.0593` (positive even alone, so not a
+multivariate artifact), and VIF for all four Phase 7 features
+(`fiber_g`=1.452, `fat_g`=1.125, `protein_g`=1.462, `carbs_g`=1.110) well
+under the 5.0 multicollinearity flag threshold. Conclusion: a genuine but
+weak (`r=0.06`) small-sample confound -- this dataset's higher-fiber items
+skew toward whole grains that also happen to be higher-GI (Bran Flakes,
+Weet-Bix, millet dishes, whole-wheat breads), not a data bug and not
+something more data cleaning would resolve. Full write-up:
+`model/saved_model/linear_regression_notes.md`. Documented as a known
+exception in `tests/test_phase_07.py` (reported every run, not hard-failed);
+`fat_g <= 0` and `carbs_g >= 0` remain hard-asserted trip-wires. **Flagged
+for revisit at Phase 9/10**: if Ridge/Lasso regularization also produces a
+positive `fiber_g` coefficient, it should be weighed as an interpretability
+concern in the Phase 10 model-selection decision, since the product's core
+premise depends on a formula transparent and biologically plausible enough
+to hand to a physician.

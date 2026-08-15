@@ -1,0 +1,18 @@
+{
+  "model_type": "linear_regression",
+  "target": "GI",
+  "features": [
+    "fiber_g",
+    "fat_g",
+    "protein_g",
+    "carbs_g"
+  ],
+  "coefficients": {
+    "fiber_g": 0.7631015372053028,
+    "fat_g": -0.48964437481040074,
+    "protein_g": -2.079529965884139,
+    "carbs_g": 0.44936627087081576
+  },
+  "intercept": 46.07668060560208,
+  "n_samples": 129
+}
